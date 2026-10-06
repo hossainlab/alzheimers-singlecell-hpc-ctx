@@ -1,0 +1,11 @@
+Target_Gene,Host_Species,Clonality_Type,Vendor,Catalog_Number,Validated_Applications,Species_Cross_Reactivity,Recommended_Dilution_IHC,HPA_Staining_Status
+CLEC5A,Rat,Monoclonal [Clone 284108],R&D Systems / BioLegend,MAB1731 / #353804,"FC, IF, Neutralization","Mouse, Human",1:100 (IF),Moderate / Microglia
+CLEC5A,Rabbit,Polyclonal,Proteintech,28373-1-AP,"WB, IHC-P, IF","Human, Mouse",1:200 (IHC),Confirmed Microvascular
+ADAMTS9,Rabbit,Polyclonal,Abcam,ab284561,"IHC-P, WB","Human, Mouse",1:150 (IHC),High / Neuronal & Glial
+ADAMTS9,Rabbit,Polyclonal,Proteintech,28540-1-AP,"WB, IHC-P, IF","Human, Mouse",1:200 (IHC),High / Endothelial
+SORL1,Mouse,Monoclonal [Clone 48],BD Biosciences,#611860,"WB, IF, IHC-P","Human, Mouse, Rat",1:200 (IHC/IF),Strong / Neuropil & Glia
+SORL1,Rabbit,Monoclonal [Clone EPR14674],Abcam,ab190684,"IHC-P, WB, IF","Human, Mouse, Rat",1:500 (IHC/IF),Strong / Perikaryon
+PCDH9,Rabbit,Polyclonal (Prestige),Atlas Antibodies / Sigma,HPA031154,"IHC-P (HPA Validated), WB","Human, Mouse",1:250 (IHC-P),Distinct Glial-Neuronal Membrane
+PCDH9,Rabbit,Polyclonal,Proteintech,27145-1-AP,"WB, IHC-P, IF","Human, Mouse",1:150 (IHC),Membranous
+DUSP1,Rabbit,Monoclonal [Clone D9A5],Cell Signaling Tech,#5142,"WB, IHC-P, IF","Human, Mouse, Rat",1:400 (IHC/IF),Nuclear / Stress-Induced
+NOTCH2,Rabbit,Monoclonal [Clone D76A6],Cell Signaling Tech,#5732,"WB, IHC-P, IF","Human, Mouse",1:300 (IHC/IF),Membranous Vascular

@@ -1,0 +1,26 @@
+GSM,Post_QC_Nuclei,Region,Condition,Initial_Nuclei,Retention_Rate_Pct,Region_Short
+GSM4982083,3500,Hippocampus (Hpc),Control,12142,28.8,Hippocampus
+GSM4982084,3500,Hippocampus (Hpc),AD,18839,18.6,Hippocampus
+GSM4982085,2519,Hippocampus (Hpc),Control,11048,22.8,Hippocampus
+GSM4982086,3500,Hippocampus (Hpc),Control,10039,34.9,Hippocampus
+GSM4982087,3500,Hippocampus (Hpc),Control,19098,18.3,Hippocampus
+GSM4982088,3500,Hippocampus (Hpc),Control,23227,15.1,Hippocampus
+GSM4982089,3500,Hippocampus (Hpc),AD,10600,33,Hippocampus
+GSM4982090,3500,Hippocampus (Hpc),AD,9101,38.5,Hippocampus
+GSM4982091,3500,Hippocampus (Hpc),Control,9190,38.1,Hippocampus
+GSM4982092,3500,Hippocampus (Hpc),Control,10929,32,Hippocampus
+GSM4982093,3500,Hippocampus (Hpc),AD,11435,30.6,Hippocampus
+GSM4982094,3500,Hippocampus (Hpc),AD,10902,32.1,Hippocampus
+GSM4982095,1953,Hippocampus (Hpc),AD,4893,39.9,Hippocampus
+GSM4982096,3500,Hippocampus (Hpc),Control,8884,39.4,Hippocampus
+GSM4982097,3500,Hippocampus (Hpc),AD,6279,55.7,Hippocampus
+GSM4982098,1579,Hippocampus (Hpc),AD,1899,83.1,Hippocampus
+GSM4982099,3500,Hippocampus (Hpc),AD,24953,14,Hippocampus
+GSM4982100,5000,Cortex (Ctx),Control,12992,38.5,Cortex
+GSM4982101,5000,Cortex (Ctx),Control,11259,44.4,Cortex
+GSM4982102,5000,Cortex (Ctx),Control,15069,33.2,Cortex
+GSM4982103,5000,Cortex (Ctx),AD,17215,29,Cortex
+GSM4982104,5000,Cortex (Ctx),AD,20144,24.8,Cortex
+GSM4982105,5000,Cortex (Ctx),AD,12105,41.3,Cortex
+GSM4982106,5000,Cortex (Ctx),Control,14774,33.8,Cortex
+GSM4982107,5000,Cortex (Ctx),AD,12433,40.2,Cortex

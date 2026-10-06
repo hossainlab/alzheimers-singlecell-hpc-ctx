@@ -216,3 +216,22 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# R environment & data files
+.RData
+.Rhistory
+.Rproj.user/
+
+# Large dataset matrices & Seurat RDS objects
+data/*
+!data/README.md
+*.rds
+*.RData
+*.tar.gz
+*.h5
+*.h5ad
+*.loom
+
+# OS generated files
+.DS_Store
+Thumbs.db

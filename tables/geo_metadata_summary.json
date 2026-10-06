@@ -1,0 +1,1102 @@
+{
+  "header": {
+    "type": "esummary",
+    "version": "0.3"
+  },
+  "result": {
+    "uids": [
+      "200163577",
+      "304982107",
+      "304982106",
+      "304982105",
+      "304982104",
+      "304982103",
+      "304982102",
+      "304982101",
+      "304982100",
+      "304982099",
+      "304982098",
+      "304982097",
+      "304982096",
+      "304982095",
+      "304982094",
+      "304982093",
+      "304982092",
+      "304982091",
+      "304982090",
+      "304982089",
+      "304982088",
+      "304982087",
+      "304982086",
+      "304982085",
+      "304982084",
+      "304982083"
+    ],
+    "200163577": {
+      "uid": "200163577",
+      "accession": "GSE163577",
+      "gds": "",
+      "title": "The human brain vasculature at single-cell resolution",
+      "summary": "10x single-cell RNA-sequencing to profile human cerebrovascular cells in health and disease",
+      "gpl": "24676",
+      "gse": "163577",
+      "taxon": "Homo sapiens",
+      "entrytype": "GSE",
+      "gdstype": "Expression profiling by high throughput sequencing",
+      "ptechtype": "",
+      "valtype": "",
+      "ssinfo": "",
+      "subsetinfo": "",
+      "pdat": "2021/04/24",
+      "suppfile": "TAR",
+      "samples": [
+        {
+          "accession": "GSM4982088",
+          "title": "Control 5 Hpc"
+        },
+        {
+          "accession": "GSM4982091",
+          "title": "Control 6 Hpc"
+        },
+        {
+          "accession": "GSM4982094",
+          "title": "AD 5 Hpc"
+        },
+        {
+          "accession": "GSM4982097",
+          "title": "AD 7 Hpc"
+        },
+        {
+          "accession": "GSM4982100",
+          "title": "Control 1 Ctx"
+        },
+        {
+          "accession": "GSM4982086",
+          "title": "Control 3 Hpc"
+        },
+        {
+          "accession": "GSM4982103",
+          "title": "AD 1 Ctx"
+        },
+        {
+          "accession": "GSM4982106",
+          "title": "Control 4 Ctx"
+        },
+        {
+          "accession": "GSM4982083",
+          "title": "Control 1 Hpc"
+        },
+        {
+          "accession": "GSM4982095",
+          "title": "AD 6 Hpc"
+        },
+        {
+          "accession": "GSM4982089",
+          "title": "AD 2 Hpc"
+        },
+        {
+          "accession": "GSM4982092",
+          "title": "Control 7 Hpc"
+        },
+        {
+          "accession": "GSM4982104",
+          "title": "AD 2 Ctx"
+        },
+        {
+          "accession": "GSM4982098",
+          "title": "AD 8 Hpc"
+        },
+        {
+          "accession": "GSM4982101",
+          "title": "Control 2 Ctx"
+        },
+        {
+          "accession": "GSM4982087",
+          "title": "Control 4 Hpc"
+        },
+        {
+          "accession": "GSM4982107",
+          "title": "AD 4 Ctx"
+        },
+        {
+          "accession": "GSM4982090",
+          "title": "AD 3 Hpc"
+        },
+        {
+          "accession": "GSM4982084",
+          "title": "AD 1 Hpc"
+        },
+        {
+          "accession": "GSM4982096",
+          "title": "Control 8 Hpc"
+        },
+        {
+          "accession": "GSM4982093",
+          "title": "AD 4 Hpc"
+        },
+        {
+          "accession": "GSM4982105",
+          "title": "AD 3 Ctx"
+        },
+        {
+          "accession": "GSM4982085",
+          "title": "Control 2 Hpc"
+        },
+        {
+          "accession": "GSM4982099",
+          "title": "AD 9 Hpc"
+        },
+        {
+          "accession": "GSM4982102",
+          "title": "Control 3 Ctx"
+        }
+      ],
+      "relations": [],
+      "extrelations": [
+        {
+          "relationtype": "SRA",
+          "targetobject": "SRP298630",
+          "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByStudy/sra/SRP/SRP298/SRP298630/"
+        }
+      ],
+      "n_samples": 25,
+      "seriestitle": "",
+      "platformtitle": "",
+      "platformtaxa": "",
+      "samplestaxa": "",
+      "pubmedids": [
+        "35165441",
+        "36418338"
+      ],
+      "projects": [],
+      "ftplink": "ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE163nnn/GSE163577/",
+      "geo2r": "no",
+      "bioproject": "PRJNA686798"
+    },
+    "304982107": {
+      "uid": "304982107",
+      "accession": "GSM4982107",
+      "gds": "",
+      "title": "AD 4 Ctx",
+      "summary": "Human brain vascular nuclei",
+      "gpl": "24676",
+      "gse": "163577",
+      "taxon": "Homo sapiens",
+      "entrytype": "GSM",
+      "gdstype": "",
+      "ptechtype": "",
+      "valtype": "",
+      "ssinfo": "",
+      "subsetinfo": "",
+      "pdat": "2021/04/24",
+      "suppfile": "TAR",
+      "samples": [],
+      "relations": [],
+      "extrelations": [
+        {
+          "relationtype": "SRA",
+          "targetobject": "SRX9708238",
+          "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX970/SRX9708238/"
+        }
+      ],
+      "n_samples": "",
+      "seriestitle": "",
+      "platformtitle": "",
+      "platformtaxa": "",
+      "samplestaxa": "",
+      "pubmedids": [],
+      "projects": [],
+      "ftplink": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4982nnn/GSM4982107/",
+      "geo2r": "",
+      "bioproject": ""
+    },
+    "304982106": {
+      "uid": "304982106",
+      "accession": "GSM4982106",
+      "gds": "",
+      "title": "Control 4 Ctx",
+      "summary": "Human brain vascular nuclei",
+      "gpl": "24676",
+      "gse": "163577",
+      "taxon": "Homo sapiens",
+      "entrytype": "GSM",
+      "gdstype": "",
+      "ptechtype": "",
+      "valtype": "",
+      "ssinfo": "",
+      "subsetinfo": "",
+      "pdat": "2021/04/24",
+      "suppfile": "TAR",
+      "samples": [],
+      "relations": [],
+      "extrelations": [
+        {
+          "relationtype": "SRA",
+          "targetobject": "SRX9708237",
+          "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX970/SRX9708237/"
+        }
+      ],
+      "n_samples": "",
+      "seriestitle": "",
+      "platformtitle": "",
+      "platformtaxa": "",
+      "samplestaxa": "",
+      "pubmedids": [],
+      "projects": [],
+      "ftplink": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4982nnn/GSM4982106/",
+      "geo2r": "",
+      "bioproject": ""
+    },
+    "304982105": {
+      "uid": "304982105",
+      "accession": "GSM4982105",
+      "gds": "",
+      "title": "AD 3 Ctx",
+      "summary": "Human brain vascular nuclei",
+      "gpl": "24676",
+      "gse": "163577",
+      "taxon": "Homo sapiens",
+      "entrytype": "GSM",
+      "gdstype": "",
+      "ptechtype": "",
+      "valtype": "",
+      "ssinfo": "",
+      "subsetinfo": "",
+      "pdat": "2021/04/24",
+      "suppfile": "TAR",
+      "samples": [],
+      "relations": [],
+      "extrelations": [
+        {
+          "relationtype": "SRA",
+          "targetobject": "SRX9708236",
+          "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX970/SRX9708236/"
+        }
+      ],
+      "n_samples": "",
+      "seriestitle": "",
+      "platformtitle": "",
+      "platformtaxa": "",
+      "samplestaxa": "",
+      "pubmedids": [],
+      "projects": [],
+      "ftplink": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4982nnn/GSM4982105/",
+      "geo2r": "",
+      "bioproject": ""
+    },
+    "304982104": {
+      "uid": "304982104",
+      "accession": "GSM4982104",
+      "gds": "",
+      "title": "AD 2 Ctx",
+      "summary": "Human brain vascular nuclei",
+      "gpl": "24676",
+      "gse": "163577",
+      "taxon": "Homo sapiens",
+      "entrytype": "GSM",
+      "gdstype": "",
+      "ptechtype": "",
+      "valtype": "",
+      "ssinfo": "",
+      "subsetinfo": "",
+      "pdat": "2021/04/24",
+      "suppfile": "TAR",
+      "samples": [],
+      "relations": [],
+      "extrelations": [
+        {
+          "relationtype": "SRA",
+          "targetobject": "SRX9708235",
+          "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX970/SRX9708235/"
+        }
+      ],
+      "n_samples": "",
+      "seriestitle": "",
+      "platformtitle": "",
+      "platformtaxa": "",
+      "samplestaxa": "",
+      "pubmedids": [],
+      "projects": [],
+      "ftplink": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4982nnn/GSM4982104/",
+      "geo2r": "",
+      "bioproject": ""
+    },
+    "304982103": {
+      "uid": "304982103",
+      "accession": "GSM4982103",
+      "gds": "",
+      "title": "AD 1 Ctx",
+      "summary": "Human brain vascular nuclei",
+      "gpl": "24676",
+      "gse": "163577",
+      "taxon": "Homo sapiens",
+      "entrytype": "GSM",
+      "gdstype": "",
+      "ptechtype": "",
+      "valtype": "",
+      "ssinfo": "",
+      "subsetinfo": "",
+      "pdat": "2021/04/24",
+      "suppfile": "TAR",
+      "samples": [],
+      "relations": [],
+      "extrelations": [
+        {
+          "relationtype": "SRA",
+          "targetobject": "SRX9708234",
+          "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX970/SRX9708234/"
+        }
+      ],
+      "n_samples": "",
+      "seriestitle": "",
+      "platformtitle": "",
+      "platformtaxa": "",
+      "samplestaxa": "",
+      "pubmedids": [],
+      "projects": [],
+      "ftplink": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4982nnn/GSM4982103/",
+      "geo2r": "",
+      "bioproject": ""
+    },
+    "304982102": {
+      "uid": "304982102",
+      "accession": "GSM4982102",
+      "gds": "",
+      "title": "Control 3 Ctx",
+      "summary": "Human brain vascular nuclei",
+      "gpl": "24676",
+      "gse": "163577",
+      "taxon": "Homo sapiens",
+      "entrytype": "GSM",
+      "gdstype": "",
+      "ptechtype": "",
+      "valtype": "",
+      "ssinfo": "",
+      "subsetinfo": "",
+      "pdat": "2021/04/24",
+      "suppfile": "TAR",
+      "samples": [],
+      "relations": [],
+      "extrelations": [
+        {
+          "relationtype": "SRA",
+          "targetobject": "SRX9708233",
+          "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX970/SRX9708233/"
+        }
+      ],
+      "n_samples": "",
+      "seriestitle": "",
+      "platformtitle": "",
+      "platformtaxa": "",
+      "samplestaxa": "",
+      "pubmedids": [],
+      "projects": [],
+      "ftplink": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4982nnn/GSM4982102/",
+      "geo2r": "",
+      "bioproject": ""
+    },
+    "304982101": {
+      "uid": "304982101",
+      "accession": "GSM4982101",
+      "gds": "",
+      "title": "Control 2 Ctx",
+      "summary": "Human brain vascular nuclei",
+      "gpl": "24676",
+      "gse": "163577",
+      "taxon": "Homo sapiens",
+      "entrytype": "GSM",
+      "gdstype": "",
+      "ptechtype": "",
+      "valtype": "",
+      "ssinfo": "",
+      "subsetinfo": "",
+      "pdat": "2021/04/24",
+      "suppfile": "TAR",
+      "samples": [],
+      "relations": [],
+      "extrelations": [
+        {
+          "relationtype": "SRA",
+          "targetobject": "SRX9708232",
+          "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX970/SRX9708232/"
+        }
+      ],
+      "n_samples": "",
+      "seriestitle": "",
+      "platformtitle": "",
+      "platformtaxa": "",
+      "samplestaxa": "",
+      "pubmedids": [],
+      "projects": [],
+      "ftplink": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4982nnn/GSM4982101/",
+      "geo2r": "",
+      "bioproject": ""
+    },
+    "304982100": {
+      "uid": "304982100",
+      "accession": "GSM4982100",
+      "gds": "",
+      "title": "Control 1 Ctx",
+      "summary": "Human brain vascular nuclei",
+      "gpl": "24676",
+      "gse": "163577",
+      "taxon": "Homo sapiens",
+      "entrytype": "GSM",
+      "gdstype": "",
+      "ptechtype": "",
+      "valtype": "",
+      "ssinfo": "",
+      "subsetinfo": "",
+      "pdat": "2021/04/24",
+      "suppfile": "TAR",
+      "samples": [],
+      "relations": [],
+      "extrelations": [
+        {
+          "relationtype": "SRA",
+          "targetobject": "SRX9708231",
+          "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX970/SRX9708231/"
+        }
+      ],
+      "n_samples": "",
+      "seriestitle": "",
+      "platformtitle": "",
+      "platformtaxa": "",
+      "samplestaxa": "",
+      "pubmedids": [],
+      "projects": [],
+      "ftplink": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4982nnn/GSM4982100/",
+      "geo2r": "",
+      "bioproject": ""
+    },
+    "304982099": {
+      "uid": "304982099",
+      "accession": "GSM4982099",
+      "gds": "",
+      "title": "AD 9 Hpc",
+      "summary": "Human brain vascular nuclei",
+      "gpl": "24676",
+      "gse": "163577",
+      "taxon": "Homo sapiens",
+      "entrytype": "GSM",
+      "gdstype": "",
+      "ptechtype": "",
+      "valtype": "",
+      "ssinfo": "",
+      "subsetinfo": "",
+      "pdat": "2021/04/24",
+      "suppfile": "TAR",
+      "samples": [],
+      "relations": [],
+      "extrelations": [
+        {
+          "relationtype": "SRA",
+          "targetobject": "SRX9708230",
+          "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX970/SRX9708230/"
+        }
+      ],
+      "n_samples": "",
+      "seriestitle": "",
+      "platformtitle": "",
+      "platformtaxa": "",
+      "samplestaxa": "",
+      "pubmedids": [],
+      "projects": [],
+      "ftplink": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4982nnn/GSM4982099/",
+      "geo2r": "",
+      "bioproject": ""
+    },
+    "304982098": {
+      "uid": "304982098",
+      "accession": "GSM4982098",
+      "gds": "",
+      "title": "AD 8 Hpc",
+      "summary": "Human brain vascular nuclei",
+      "gpl": "24676",
+      "gse": "163577",
+      "taxon": "Homo sapiens",
+      "entrytype": "GSM",
+      "gdstype": "",
+      "ptechtype": "",
+      "valtype": "",
+      "ssinfo": "",
+      "subsetinfo": "",
+      "pdat": "2021/04/24",
+      "suppfile": "TAR",
+      "samples": [],
+      "relations": [],
+      "extrelations": [
+        {
+          "relationtype": "SRA",
+          "targetobject": "SRX9708229",
+          "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX970/SRX9708229/"
+        }
+      ],
+      "n_samples": "",
+      "seriestitle": "",
+      "platformtitle": "",
+      "platformtaxa": "",
+      "samplestaxa": "",
+      "pubmedids": [],
+      "projects": [],
+      "ftplink": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4982nnn/GSM4982098/",
+      "geo2r": "",
+      "bioproject": ""
+    },
+    "304982097": {
+      "uid": "304982097",
+      "accession": "GSM4982097",
+      "gds": "",
+      "title": "AD 7 Hpc",
+      "summary": "Human brain vascular nuclei",
+      "gpl": "24676",
+      "gse": "163577",
+      "taxon": "Homo sapiens",
+      "entrytype": "GSM",
+      "gdstype": "",
+      "ptechtype": "",
+      "valtype": "",
+      "ssinfo": "",
+      "subsetinfo": "",
+      "pdat": "2021/04/24",
+      "suppfile": "TAR",
+      "samples": [],
+      "relations": [],
+      "extrelations": [
+        {
+          "relationtype": "SRA",
+          "targetobject": "SRX9708228",
+          "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX970/SRX9708228/"
+        }
+      ],
+      "n_samples": "",
+      "seriestitle": "",
+      "platformtitle": "",
+      "platformtaxa": "",
+      "samplestaxa": "",
+      "pubmedids": [],
+      "projects": [],
+      "ftplink": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4982nnn/GSM4982097/",
+      "geo2r": "",
+      "bioproject": ""
+    },
+    "304982096": {
+      "uid": "304982096",
+      "accession": "GSM4982096",
+      "gds": "",
+      "title": "Control 8 Hpc",
+      "summary": "Human brain vascular nuclei",
+      "gpl": "24676",
+      "gse": "163577",
+      "taxon": "Homo sapiens",
+      "entrytype": "GSM",
+      "gdstype": "",
+      "ptechtype": "",
+      "valtype": "",
+      "ssinfo": "",
+      "subsetinfo": "",
+      "pdat": "2021/04/24",
+      "suppfile": "TAR",
+      "samples": [],
+      "relations": [],
+      "extrelations": [
+        {
+          "relationtype": "SRA",
+          "targetobject": "SRX9708227",
+          "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX970/SRX9708227/"
+        }
+      ],
+      "n_samples": "",
+      "seriestitle": "",
+      "platformtitle": "",
+      "platformtaxa": "",
+      "samplestaxa": "",
+      "pubmedids": [],
+      "projects": [],
+      "ftplink": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4982nnn/GSM4982096/",
+      "geo2r": "",
+      "bioproject": ""
+    },
+    "304982095": {
+      "uid": "304982095",
+      "accession": "GSM4982095",
+      "gds": "",
+      "title": "AD 6 Hpc",
+      "summary": "Human brain vascular nuclei",
+      "gpl": "24676",
+      "gse": "163577",
+      "taxon": "Homo sapiens",
+      "entrytype": "GSM",
+      "gdstype": "",
+      "ptechtype": "",
+      "valtype": "",
+      "ssinfo": "",
+      "subsetinfo": "",
+      "pdat": "2021/04/24",
+      "suppfile": "TAR",
+      "samples": [],
+      "relations": [],
+      "extrelations": [
+        {
+          "relationtype": "SRA",
+          "targetobject": "SRX9708226",
+          "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX970/SRX9708226/"
+        }
+      ],
+      "n_samples": "",
+      "seriestitle": "",
+      "platformtitle": "",
+      "platformtaxa": "",
+      "samplestaxa": "",
+      "pubmedids": [],
+      "projects": [],
+      "ftplink": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4982nnn/GSM4982095/",
+      "geo2r": "",
+      "bioproject": ""
+    },
+    "304982094": {
+      "uid": "304982094",
+      "accession": "GSM4982094",
+      "gds": "",
+      "title": "AD 5 Hpc",
+      "summary": "Human brain vascular nuclei",
+      "gpl": "24676",
+      "gse": "163577",
+      "taxon": "Homo sapiens",
+      "entrytype": "GSM",
+      "gdstype": "",
+      "ptechtype": "",
+      "valtype": "",
+      "ssinfo": "",
+      "subsetinfo": "",
+      "pdat": "2021/04/24",
+      "suppfile": "TAR",
+      "samples": [],
+      "relations": [],
+      "extrelations": [
+        {
+          "relationtype": "SRA",
+          "targetobject": "SRX9708225",
+          "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX970/SRX9708225/"
+        }
+      ],
+      "n_samples": "",
+      "seriestitle": "",
+      "platformtitle": "",
+      "platformtaxa": "",
+      "samplestaxa": "",
+      "pubmedids": [],
+      "projects": [],
+      "ftplink": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4982nnn/GSM4982094/",
+      "geo2r": "",
+      "bioproject": ""
+    },
+    "304982093": {
+      "uid": "304982093",
+      "accession": "GSM4982093",
+      "gds": "",
+      "title": "AD 4 Hpc",
+      "summary": "Human brain vascular nuclei",
+      "gpl": "24676",
+      "gse": "163577",
+      "taxon": "Homo sapiens",
+      "entrytype": "GSM",
+      "gdstype": "",
+      "ptechtype": "",
+      "valtype": "",
+      "ssinfo": "",
+      "subsetinfo": "",
+      "pdat": "2021/04/24",
+      "suppfile": "TAR",
+      "samples": [],
+      "relations": [],
+      "extrelations": [
+        {
+          "relationtype": "SRA",
+          "targetobject": "SRX9708224",
+          "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX970/SRX9708224/"
+        }
+      ],
+      "n_samples": "",
+      "seriestitle": "",
+      "platformtitle": "",
+      "platformtaxa": "",
+      "samplestaxa": "",
+      "pubmedids": [],
+      "projects": [],
+      "ftplink": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4982nnn/GSM4982093/",
+      "geo2r": "",
+      "bioproject": ""
+    },
+    "304982092": {
+      "uid": "304982092",
+      "accession": "GSM4982092",
+      "gds": "",
+      "title": "Control 7 Hpc",
+      "summary": "Human brain vascular nuclei",
+      "gpl": "24676",
+      "gse": "163577",
+      "taxon": "Homo sapiens",
+      "entrytype": "GSM",
+      "gdstype": "",
+      "ptechtype": "",
+      "valtype": "",
+      "ssinfo": "",
+      "subsetinfo": "",
+      "pdat": "2021/04/24",
+      "suppfile": "TAR",
+      "samples": [],
+      "relations": [],
+      "extrelations": [
+        {
+          "relationtype": "SRA",
+          "targetobject": "SRX9708223",
+          "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX970/SRX9708223/"
+        }
+      ],
+      "n_samples": "",
+      "seriestitle": "",
+      "platformtitle": "",
+      "platformtaxa": "",
+      "samplestaxa": "",
+      "pubmedids": [],
+      "projects": [],
+      "ftplink": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4982nnn/GSM4982092/",
+      "geo2r": "",
+      "bioproject": ""
+    },
+    "304982091": {
+      "uid": "304982091",
+      "accession": "GSM4982091",
+      "gds": "",
+      "title": "Control 6 Hpc",
+      "summary": "Human brain vascular nuclei",
+      "gpl": "24676",
+      "gse": "163577",
+      "taxon": "Homo sapiens",
+      "entrytype": "GSM",
+      "gdstype": "",
+      "ptechtype": "",
+      "valtype": "",
+      "ssinfo": "",
+      "subsetinfo": "",
+      "pdat": "2021/04/24",
+      "suppfile": "TAR",
+      "samples": [],
+      "relations": [],
+      "extrelations": [
+        {
+          "relationtype": "SRA",
+          "targetobject": "SRX9708222",
+          "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX970/SRX9708222/"
+        }
+      ],
+      "n_samples": "",
+      "seriestitle": "",
+      "platformtitle": "",
+      "platformtaxa": "",
+      "samplestaxa": "",
+      "pubmedids": [],
+      "projects": [],
+      "ftplink": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4982nnn/GSM4982091/",
+      "geo2r": "",
+      "bioproject": ""
+    },
+    "304982090": {
+      "uid": "304982090",
+      "accession": "GSM4982090",
+      "gds": "",
+      "title": "AD 3 Hpc",
+      "summary": "Human brain vascular nuclei",
+      "gpl": "24676",
+      "gse": "163577",
+      "taxon": "Homo sapiens",
+      "entrytype": "GSM",
+      "gdstype": "",
+      "ptechtype": "",
+      "valtype": "",
+      "ssinfo": "",
+      "subsetinfo": "",
+      "pdat": "2021/04/24",
+      "suppfile": "TAR",
+      "samples": [],
+      "relations": [],
+      "extrelations": [
+        {
+          "relationtype": "SRA",
+          "targetobject": "SRX9708221",
+          "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX970/SRX9708221/"
+        }
+      ],
+      "n_samples": "",
+      "seriestitle": "",
+      "platformtitle": "",
+      "platformtaxa": "",
+      "samplestaxa": "",
+      "pubmedids": [],
+      "projects": [],
+      "ftplink": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4982nnn/GSM4982090/",
+      "geo2r": "",
+      "bioproject": ""
+    },
+    "304982089": {
+      "uid": "304982089",
+      "accession": "GSM4982089",
+      "gds": "",
+      "title": "AD 2 Hpc",
+      "summary": "Human brain vascular nuclei",
+      "gpl": "24676",
+      "gse": "163577",
+      "taxon": "Homo sapiens",
+      "entrytype": "GSM",
+      "gdstype": "",
+      "ptechtype": "",
+      "valtype": "",
+      "ssinfo": "",
+      "subsetinfo": "",
+      "pdat": "2021/04/24",
+      "suppfile": "TAR",
+      "samples": [],
+      "relations": [],
+      "extrelations": [
+        {
+          "relationtype": "SRA",
+          "targetobject": "SRX9708220",
+          "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX970/SRX9708220/"
+        }
+      ],
+      "n_samples": "",
+      "seriestitle": "",
+      "platformtitle": "",
+      "platformtaxa": "",
+      "samplestaxa": "",
+      "pubmedids": [],
+      "projects": [],
+      "ftplink": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4982nnn/GSM4982089/",
+      "geo2r": "",
+      "bioproject": ""
+    },
+    "304982088": {
+      "uid": "304982088",
+      "accession": "GSM4982088",
+      "gds": "",
+      "title": "Control 5 Hpc",
+      "summary": "Human brain vascular nuclei",
+      "gpl": "24676",
+      "gse": "163577",
+      "taxon": "Homo sapiens",
+      "entrytype": "GSM",
+      "gdstype": "",
+      "ptechtype": "",
+      "valtype": "",
+      "ssinfo": "",
+      "subsetinfo": "",
+      "pdat": "2021/04/24",
+      "suppfile": "TAR",
+      "samples": [],
+      "relations": [],
+      "extrelations": [
+        {
+          "relationtype": "SRA",
+          "targetobject": "SRX9708219",
+          "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX970/SRX9708219/"
+        }
+      ],
+      "n_samples": "",
+      "seriestitle": "",
+      "platformtitle": "",
+      "platformtaxa": "",
+      "samplestaxa": "",
+      "pubmedids": [],
+      "projects": [],
+      "ftplink": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4982nnn/GSM4982088/",
+      "geo2r": "",
+      "bioproject": ""
+    },
+    "304982087": {
+      "uid": "304982087",
+      "accession": "GSM4982087",
+      "gds": "",
+      "title": "Control 4 Hpc",
+      "summary": "Human brain vascular nuclei",
+      "gpl": "24676",
+      "gse": "163577",
+      "taxon": "Homo sapiens",
+      "entrytype": "GSM",
+      "gdstype": "",
+      "ptechtype": "",
+      "valtype": "",
+      "ssinfo": "",
+      "subsetinfo": "",
+      "pdat": "2021/04/24",
+      "suppfile": "TAR",
+      "samples": [],
+      "relations": [],
+      "extrelations": [
+        {
+          "relationtype": "SRA",
+          "targetobject": "SRX9708218",
+          "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX970/SRX9708218/"
+        }
+      ],
+      "n_samples": "",
+      "seriestitle": "",
+      "platformtitle": "",
+      "platformtaxa": "",
+      "samplestaxa": "",
+      "pubmedids": [],
+      "projects": [],
+      "ftplink": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4982nnn/GSM4982087/",
+      "geo2r": "",
+      "bioproject": ""
+    },
+    "304982086": {
+      "uid": "304982086",
+      "accession": "GSM4982086",
+      "gds": "",
+      "title": "Control 3 Hpc",
+      "summary": "Human brain vascular nuclei",
+      "gpl": "24676",
+      "gse": "163577",
+      "taxon": "Homo sapiens",
+      "entrytype": "GSM",
+      "gdstype": "",
+      "ptechtype": "",
+      "valtype": "",
+      "ssinfo": "",
+      "subsetinfo": "",
+      "pdat": "2021/04/24",
+      "suppfile": "TAR",
+      "samples": [],
+      "relations": [],
+      "extrelations": [
+        {
+          "relationtype": "SRA",
+          "targetobject": "SRX9708217",
+          "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX970/SRX9708217/"
+        }
+      ],
+      "n_samples": "",
+      "seriestitle": "",
+      "platformtitle": "",
+      "platformtaxa": "",
+      "samplestaxa": "",
+      "pubmedids": [],
+      "projects": [],
+      "ftplink": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4982nnn/GSM4982086/",
+      "geo2r": "",
+      "bioproject": ""
+    },
+    "304982085": {
+      "uid": "304982085",
+      "accession": "GSM4982085",
+      "gds": "",
+      "title": "Control 2 Hpc",
+      "summary": "Human brain vascular nuclei",
+      "gpl": "24676",
+      "gse": "163577",
+      "taxon": "Homo sapiens",
+      "entrytype": "GSM",
+      "gdstype": "",
+      "ptechtype": "",
+      "valtype": "",
+      "ssinfo": "",
+      "subsetinfo": "",
+      "pdat": "2021/04/24",
+      "suppfile": "TAR",
+      "samples": [],
+      "relations": [],
+      "extrelations": [
+        {
+          "relationtype": "SRA",
+          "targetobject": "SRX9708216",
+          "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX970/SRX9708216/"
+        }
+      ],
+      "n_samples": "",
+      "seriestitle": "",
+      "platformtitle": "",
+      "platformtaxa": "",
+      "samplestaxa": "",
+      "pubmedids": [],
+      "projects": [],
+      "ftplink": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4982nnn/GSM4982085/",
+      "geo2r": "",
+      "bioproject": ""
+    },
+    "304982084": {
+      "uid": "304982084",
+      "accession": "GSM4982084",
+      "gds": "",
+      "title": "AD 1 Hpc",
+      "summary": "Human brain vascular nuclei",
+      "gpl": "24676",
+      "gse": "163577",
+      "taxon": "Homo sapiens",
+      "entrytype": "GSM",
+      "gdstype": "",
+      "ptechtype": "",
+      "valtype": "",
+      "ssinfo": "",
+      "subsetinfo": "",
+      "pdat": "2021/04/24",
+      "suppfile": "TAR",
+      "samples": [],
+      "relations": [],
+      "extrelations": [
+        {
+          "relationtype": "SRA",
+          "targetobject": "SRX9708215",
+          "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX970/SRX9708215/"
+        }
+      ],
+      "n_samples": "",
+      "seriestitle": "",
+      "platformtitle": "",
+      "platformtaxa": "",
+      "samplestaxa": "",
+      "pubmedids": [],
+      "projects": [],
+      "ftplink": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4982nnn/GSM4982084/",
+      "geo2r": "",
+      "bioproject": ""
+    },
+    "304982083": {
+      "uid": "304982083",
+      "accession": "GSM4982083",
+      "gds": "",
+      "title": "Control 1 Hpc",
+      "summary": "Human brain vascular nuclei",
+      "gpl": "24676",
+      "gse": "163577",
+      "taxon": "Homo sapiens",
+      "entrytype": "GSM",
+      "gdstype": "",
+      "ptechtype": "",
+      "valtype": "",
+      "ssinfo": "",
+      "subsetinfo": "",
+      "pdat": "2021/04/24",
+      "suppfile": "TAR",
+      "samples": [],
+      "relations": [],
+      "extrelations": [
+        {
+          "relationtype": "SRA",
+          "targetobject": "SRX9708214",
+          "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX970/SRX9708214/"
+        }
+      ],
+      "n_samples": "",
+      "seriestitle": "",
+      "platformtitle": "",
+      "platformtaxa": "",
+      "samplestaxa": "",
+      "pubmedids": [],
+      "projects": [],
+      "ftplink": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4982nnn/GSM4982083/",
+      "geo2r": "",
+      "bioproject": ""
+    }
+  }
+}

@@ -1,0 +1,202 @@
+[
+  {
+    "gsm": "GSM4982083",
+    "title": "Control 1 Hpc",
+    "region": "Hippocampus (Hpc)",
+    "condition": "Control",
+    "cells": 12142,
+    "file": "GSM4982083_01_10_C_filtered_feature_bc_matrix.tar.gz"
+  },
+  {
+    "gsm": "GSM4982084",
+    "title": "AD 1 Hpc",
+    "region": "Hippocampus (Hpc)",
+    "condition": "AD",
+    "cells": 18839,
+    "file": "GSM4982084_01_05_AD_filtered_feature_bc_matrix.tar.gz"
+  },
+  {
+    "gsm": "GSM4982085",
+    "title": "Control 2 Hpc",
+    "region": "Hippocampus (Hpc)",
+    "condition": "Control",
+    "cells": 11048,
+    "file": "GSM4982085_01_06_C_filtered_feature_bc_matrix.tar.gz"
+  },
+  {
+    "gsm": "GSM4982086",
+    "title": "Control 3 Hpc",
+    "region": "Hippocampus (Hpc)",
+    "condition": "Control",
+    "cells": 10039,
+    "file": "GSM4982086_01_09_C_filtered_feature_bc_matrix.tar.gz"
+  },
+  {
+    "gsm": "GSM4982087",
+    "title": "Control 4 Hpc",
+    "region": "Hippocampus (Hpc)",
+    "condition": "Control",
+    "cells": 19098,
+    "file": "GSM4982087_02_11_C_filtered_feature_bc_matrix.tar.gz"
+  },
+  {
+    "gsm": "GSM4982088",
+    "title": "Control 5 Hpc",
+    "region": "Hippocampus (Hpc)",
+    "condition": "Control",
+    "cells": 23227,
+    "file": "GSM4982088_02_01_C_filtered_feature_bc_matrix.tar.gz"
+  },
+  {
+    "gsm": "GSM4982089",
+    "title": "AD 2 Hpc",
+    "region": "Hippocampus (Hpc)",
+    "condition": "AD",
+    "cells": 10600,
+    "file": "GSM4982089_02_04_filtered_feature_bc_matrix.tar.gz"
+  },
+  {
+    "gsm": "GSM4982090",
+    "title": "AD 3 Hpc",
+    "region": "Hippocampus (Hpc)",
+    "condition": "AD",
+    "cells": 9101,
+    "file": "GSM4982090_03_02_AD_filtered_feature_bc_matrix.tar.gz"
+  },
+  {
+    "gsm": "GSM4982091",
+    "title": "Control 6 Hpc",
+    "region": "Hippocampus (Hpc)",
+    "condition": "Control",
+    "cells": 9190,
+    "file": "GSM4982091_03_03_C_filtered_feature_bc_matrix.tar.gz"
+  },
+  {
+    "gsm": "GSM4982092",
+    "title": "Control 7 Hpc",
+    "region": "Hippocampus (Hpc)",
+    "condition": "Control",
+    "cells": 10929,
+    "file": "GSM4982092_03_09_C_filtered_feature_bc_matrix.tar.gz"
+  },
+  {
+    "gsm": "GSM4982093",
+    "title": "AD 4 Hpc",
+    "region": "Hippocampus (Hpc)",
+    "condition": "AD",
+    "cells": 11435,
+    "file": "GSM4982093_04_11_AD_filtered_feature_bc_matrix.tar.gz"
+  },
+  {
+    "gsm": "GSM4982094",
+    "title": "AD 5 Hpc",
+    "region": "Hippocampus (Hpc)",
+    "condition": "AD",
+    "cells": 10902,
+    "file": "GSM4982094_04_13_AD_filtered_feature_bc_matrix.tar.gz"
+  },
+  {
+    "gsm": "GSM4982095",
+    "title": "AD 6 Hpc",
+    "region": "Hippocampus (Hpc)",
+    "condition": "AD",
+    "cells": 4893,
+    "file": "GSM4982095_04_15_AD_filtered_feature_bc_matrix.tar.gz"
+  },
+  {
+    "gsm": "GSM4982096",
+    "title": "Control 8 Hpc",
+    "region": "Hippocampus (Hpc)",
+    "condition": "Control",
+    "cells": 8884,
+    "file": "GSM4982096_04_09_C_filtered_feature_bc_matrix.tar.gz"
+  },
+  {
+    "gsm": "GSM4982097",
+    "title": "AD 7 Hpc",
+    "region": "Hippocampus (Hpc)",
+    "condition": "AD",
+    "cells": 6279,
+    "file": "GSM4982097_05_10_AD_filtered_feature_bc_matrix.tar.gz"
+  },
+  {
+    "gsm": "GSM4982098",
+    "title": "AD 8 Hpc",
+    "region": "Hippocampus (Hpc)",
+    "condition": "AD",
+    "cells": 1899,
+    "file": "GSM4982098_05_04_AD_filtered_feature_bc_matrix.tar.gz"
+  },
+  {
+    "gsm": "GSM4982099",
+    "title": "AD 9 Hpc",
+    "region": "Hippocampus (Hpc)",
+    "condition": "AD",
+    "cells": 24953,
+    "file": "GSM4982099_H2004_AD_filtered_feature_bc_matrix.tar.gz"
+  },
+  {
+    "gsm": "GSM4982100",
+    "title": "Control 1 Ctx",
+    "region": "Cortex (Ctx)",
+    "condition": "Control",
+    "cells": 12992,
+    "file": "GSM4982100_O1_1OC_Ctx_filtered_feature_bc_matrix.tar.gz"
+  },
+  {
+    "gsm": "GSM4982101",
+    "title": "Control 2 Ctx",
+    "region": "Cortex (Ctx)",
+    "condition": "Control",
+    "cells": 11259,
+    "file": "GSM4982101_O3_O3C_Ctx_filtered_feature_bc_matrix.tar.gz"
+  },
+  {
+    "gsm": "GSM4982102",
+    "title": "Control 3 Ctx",
+    "region": "Cortex (Ctx)",
+    "condition": "Control",
+    "cells": 15069,
+    "file": "GSM4982102_O3_O9C_Ctx_filtered_feature_bc_matrix.tar.gz"
+  },
+  {
+    "gsm": "GSM4982103",
+    "title": "AD 1 Ctx",
+    "region": "Cortex (Ctx)",
+    "condition": "AD",
+    "cells": 17215,
+    "file": "GSM4982103_O4_11AD_Ctx_filtered_feature_bc_matrix.tar.gz"
+  },
+  {
+    "gsm": "GSM4982104",
+    "title": "AD 2 Ctx",
+    "region": "Cortex (Ctx)",
+    "condition": "AD",
+    "cells": 20144,
+    "file": "GSM4982104_O4_13AD_Ctx_filtered_feature_bc_matrix.tar.gz"
+  },
+  {
+    "gsm": "GSM4982105",
+    "title": "AD 3 Ctx",
+    "region": "Cortex (Ctx)",
+    "condition": "AD",
+    "cells": 12105,
+    "file": "GSM4982105_O4_15AD_Ctx_filtered_feature_bc_matrix.tar.gz"
+  },
+  {
+    "gsm": "GSM4982106",
+    "title": "Control 4 Ctx",
+    "region": "Cortex (Ctx)",
+    "condition": "Control",
+    "cells": 14774,
+    "file": "GSM4982106_O4_O9C_Ctx_filtered_feature_bc_matrix.tar.gz"
+  },
+  {
+    "gsm": "GSM4982107",
+    "title": "AD 4 Ctx",
+    "region": "Cortex (Ctx)",
+    "condition": "AD",
+    "cells": 12433,
+    "file": "GSM4982107_O5_1OAD_Ctx_filtered_feature_bc_matrix.tar.gz"
+  }
+]
