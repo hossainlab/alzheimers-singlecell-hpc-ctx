@@ -1,0 +1,6 @@
+Gene,Protein_Name,Human_UniProt,Mouse_Ortholog,Mouse_UniProt,Protein_Seq_Identity_Pct,Functional_Domain_Identity_Pct,Subcellular_Localization,Surfaceome_Status,Mouse_5xFAD_Concordance,In_Vivo_Suitability_Index,Pathological_Axis
+ADAMTS9,A Disintegrin and Metalloproteinase with Thrombospondin Motifs 9,Q9P2N4,Adamts9,Q8CG52,91.2,94.8,Secreted (Extracellular Matrix),Secreted Matrix Factor,Verified Depleted,96,Vascular / BBB Matrix Disruption
+PDE10A,Phosphodiesterase 10A,Q9Y233,Pde10a,Q3UM11,97.4,98.6,Cytoplasm & Membrane-Associated,Intracellular Enzyme,Verified Altered,94,Stress & Cyclic Nucleotide Signaling
+FLT1,Fms-Related Receptor Tyrosine Kinase 1 (VEGFR1),P17948,Flt1,P35969,88.5,92.1,Cell Surface (Type I TM Receptor),Confirmed Surface Receptor,Verified Elevated,95,Neuroinflammation & Angiogenic Stress
+AFF3,AF4/FMR2 Family Member 3,P51816,Aff3,O55111,93.6,95.8,Nucleus (Transcriptional Complex),Nuclear Factor,Verified Elevated,90,Transcriptional Dysregulation
+NAMPT,Nicotinamide Phosphoribosyltransferase,P43490,Nampt,Q99KQ4,96.2,98.4,Cytoplasm & Extracellular (eNAMPT),Dual (Intracellular / Secreted Cytokine),Verified Depleted,93,Microglial Bioenergetic & Inflammatory Stress

@@ -1,0 +1,13 @@
+Gene,HPC_CTPS_Rank,HPC_Consensus_Score,Cell_Type_Breadth,Microglia_Rank,Microglia_log2FC,Microglia_padj,Biological_Rationale
+ADAMTS9,1,100,5,1,-2.872545500123389,2.5456472956982763e-27,Consistently Rank 1 across both whole-tissue Hippocampus CTPS and Microglia DEGs. Master vascular matrix metalloproteinase.
+PDE10A,2,65.56,5,68,-1.4397878067598242,1.0518088446638856e-4,"Rank 2 in Hippocampus CTPS (broad multi-cellular impact across 5 lineages + high PPI connectivity), but lower specific ranking in Microglia alone."
+FLT1,4,63.41,5,7,-1.595948638601923,1.2145322529295492e-15,Rank 4 in Hippocampus CTPS and Rank 7 in Microglia DEGs (VEGFR1 vascular/neuroimmune receptor altered across glia).
+NEAT1,5,62.24,5,18,-0.44279732289718954,1.6994881683343754e-10,Lineage-differential target with high therapeutic relevance.
+SLC6A17,6,54.84,1,NA,NA,NA,Lineage-differential target with high therapeutic relevance.
+MALAT1,7,54.72,5,10,-0.40985473318301047,2.8722908209544254e-14,Lineage-differential target with high therapeutic relevance.
+AFF3,8,54.61,4,41,-1.7975790709298152,8.230124606164929e-7,Lineage-differential target with high therapeutic relevance.
+NAMPT,11,53.16,5,2,-1.909503568614064,1.4036061175796275e-20,"Rank 2 in Microglia (acute microglial metabolic collapse, log2FC = -1.91), while Rank 11 in multi-lineage CTPS due to moderate changes in astrocytes."
+PLXDC2,247,21.78,4,3,0.5444515805766121,6.786038200404572e-20,"Rank 3 in Microglia DEGs (plexin domain surface factor upregulated in activated microglia), but more lineage-restricted."
+SRGN,127,26.18,3,4,-1.3365586734296226,4.579418753710661e-17,Rank 4 in Microglia DEGs (serglycin proteoglycan mediator of microglial neuroinflammation).
+KCNMA1,602,17.19,2,5,0.8632488858656515,5.070332714890663e-17,Lineage-differential target with high therapeutic relevance.
+HDAC9,562,17.53,1,6,0.9468096517447412,2.835353455535438e-16,Lineage-differential target with high therapeutic relevance.

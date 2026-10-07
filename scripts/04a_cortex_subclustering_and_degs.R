@@ -50,8 +50,9 @@ theme_pub <- function(base_size = 11) {
       legend.text = element_text(size = rel(0.85), color = "black"),
       legend.background = element_blank(),
       legend.key = element_blank(),
-      panel.grid.major = element_line(color = "grey94", linewidth = 0.3),
-      panel.grid.minor = element_blank(),
+      panel.grid = element_blank(),
+      panel.background = element_rect(fill = "white", color = NA),
+      plot.background = element_rect(fill = "white", color = NA),
       strip.background = element_rect(fill = "grey92", color = NA),
       strip.text = element_text(face = "bold", size = rel(0.95), color = "black")
     )
@@ -110,15 +111,24 @@ for (ct in target_celltypes) {
   n_sub <- length(unique(sub_obj$Subtype))
   sub_palette <- colorRampPalette(brewer.pal(min(8, max(3, n_sub)), "Set2"))(n_sub)
   p2a <- DimPlot(sub_obj, group.by = "Subtype", split.by = "Condition", cols = sub_palette, pt.size = 0.8) +
-    labs(x = "UMAP 1", y = "UMAP 2", color = "Subtype") +
+    labs(x = "UMAP_1", y = "UMAP_2", color = "Subtype") +
     guides(color = guide_legend(override.aes = list(size = 4, alpha = 1))) +
-    theme_pub()
+    theme_pub() +
+    theme(
+      panel.background = element_rect(fill = "white", color = NA),
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.grid = element_blank()
+    )
   
-  # Panel b: Subtype Markers DotPlot
+  # Panel b: Subtype Markers DotPlot (capped to top 20 markers per cell type for legibility)
   Idents(sub_obj) <- "Subtype"
   sub_markers <- FindAllMarkers(sub_obj, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.25, max.cells.per.ident = 300, verbose = FALSE)
-  top_markers <- sub_markers %>% group_by(cluster) %>% top_n(n = 6, wt = avg_log2FC)
-  p2b <- DotPlot(sub_obj, features = unique(top_markers$gene), cols = c("#f7f7f7", "#b2182b"), dot.scale = 5) +
+  top_markers <- sub_markers %>% group_by(cluster) %>% arrange(desc(avg_log2FC)) %>% slice_head(n = max(2, floor(20 / max(1, n_sub))))
+  markers_to_plot <- unique(top_markers$gene)
+  if (length(markers_to_plot) > 20) {
+    markers_to_plot <- head(markers_to_plot, 20)
+  }
+  p2b <- DotPlot(sub_obj, features = markers_to_plot, cols = c("#f7f7f7", "#b2182b"), dot.scale = 5) +
     RotatedAxis() +
     labs(x = "Subtype", y = "Marker Gene", size = "Percent Expressed", color = "Average Expression") +
     coord_flip() +

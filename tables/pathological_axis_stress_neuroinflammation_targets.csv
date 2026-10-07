@@ -1,0 +1,13 @@
+Gene,Pathological_Subsystem,Mechanism_in_AD,Consensus_Score,cell_type_breadth,mean_abs_log2FC,mean_neg_log10_padj,ppi_degree
+DUSP1,Cellular Stress / MAPK Signaling,MAPK phosphatase: suppresses stress-activated JNK/p38 kinase cascades in glia,15.52,1,0.47746140986605334,5.609135662811962,0
+JUN,Cellular Stress / MAPK Signaling,AP-1 transcription factor: master mediator of immediate early stress and apoptosis,NA,NA,NA,NA,NA
+FOS,Cellular Stress / MAPK Signaling,Immediate early gene: dimerizes with JUN driving chronic glial inflammation,11.1,0,0.20999512905813664,0,0
+ATF3,Cellular Stress / MAPK Signaling,Activating transcription factor 3: induced by cellular injury and DNA damage,NA,NA,NA,NA,NA
+GADD45B,Cellular Stress / MAPK Signaling,Growth arrest & DNA damage inducible: regulates cellular stress checkpoints,NA,NA,NA,NA,NA
+PDE10A,Cellular Stress / MAPK Signaling,Phosphodiesterase 10A: hydrolyzes cAMP/cGMP dampening protective CREB signaling,65.56,5,1.6934256511785646,62.5875214342459,15
+NAMPT,Neuroinflammation / Innate Activation,Rate-limiting NAD+ enzyme: depleted in microglia causing mitochondrial/metabolic failure,53.16,5,1.3405231134418618,36.38201786491835,13
+CLEC5A,Neuroinflammation / Innate Activation,Myeloid receptor: interacts with TYROBP/DAP12 driving neurotoxic microgliosis,NA,NA,NA,NA,NA
+TYROBP,Neuroinflammation / Innate Activation,DAP12 adaptor: core microglial signaling hub physically linked to TREM2 and CLEC5A,NA,NA,NA,NA,NA
+SRGN,Neuroinflammation / Innate Activation,Granule proteoglycan: secreted by microglia driving pro-inflammatory cytokine release,26.18,3,1.1377941486029566,19.451552995192703,0
+FLT1,Neuroinflammation / Innate Activation,VEGFR1 receptor: hyper-stimulated by hypoxic vascular stress and glial inflammation,63.41,5,1.4586023130188608,70.59452552350209,14
+ADAMTS9,Vascular Matrix Disruption,Matrix metalloproteinase: degrades perivascular versican and basement membrane,100,5,2.5839853899045604,171.6443855323383,16

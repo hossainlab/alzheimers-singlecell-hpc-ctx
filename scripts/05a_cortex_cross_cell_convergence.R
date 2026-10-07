@@ -204,10 +204,18 @@ p3e_vln <- VlnPlot(
   pt.size = 0,
   combine = FALSE
 )
-p3e_combined <- wrap_plots(lapply(p3e_vln, function(p) {
-  p + theme_pub(base_size = 8) +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1, face = "bold", size = 7.5, color = "black"), legend.position = "none")
-}), ncol = 3)
+plots_ctx_3e <- lapply(seq_along(p3e_vln), function(i) {
+  p3e_vln[[i]] + ggtitle(top_candidates[i]) +
+    theme_pub(base_size = 9) +
+    theme(
+      plot.title = element_text(face = "bold.italic", size = 12, hjust = 0.5, color = "black"),
+      axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1, face = "bold", size = 8, color = "black"),
+      legend.title = element_text(face = "bold", size = 9, color = "black")
+    )
+})
+p3e_combined <- wrap_plots(plots_ctx_3e, ncol = 3) + 
+  plot_layout(guides = "collect") & 
+  theme(legend.position = "bottom")
 save_plot_pair(p3e_combined, file.path(fig3_dir, "Fig3e_cortex_expression_violins"), width = 12, height = 7)
 
 # 7. Consensus Therapeutic Prioritization Score (CTPS) Ranking

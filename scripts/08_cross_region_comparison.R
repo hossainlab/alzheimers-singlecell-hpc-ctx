@@ -90,14 +90,15 @@ prop_all$Condition <- factor(prop_all$Condition, levels = c("Control", "AD"))
 prop_all$cell_type <- factor(prop_all$cell_type, levels = target_cts)
 
 p_prop_comp <- ggplot(prop_all, aes(x = Condition, y = Proportion, fill = cell_type)) +
-  geom_bar(stat = "identity", width = 0.65, color = "black", linewidth = 0.3) +
+  geom_bar(stat = "identity", width = 0.72, color = "black", linewidth = 0.3) +
   facet_wrap(~Region) +
+  scale_x_discrete(expand = expansion(mult = c(0.2, 0.2))) +
   scale_fill_manual(values = palette_6, name = "Cell Type") +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 100.5)) +
   labs(x = "Condition", y = "Lineage Proportion (%)") +
   theme_pub() +
   theme(strip.text = element_text(face = "bold", size = 11, color = "black"), axis.text = element_text(face = "bold", color = "black"))
-save_plot_pair(p_prop_comp, file.path(out_dir, "Fig_CrossRegion_01_celltype_proportions_comparison"), width = 8, height = 5.5)
+save_plot_pair(p_prop_comp, file.path(out_dir, "Fig_CrossRegion_01_celltype_proportions_comparison"), width = 6.8, height = 5.2)
 
 # 2. Cross-Region Expression Violins of Top Targets
 top_genes <- c("DUSP1", "FOS", "JUN", "EGR1", "SORL1", "ADAMTS9")
@@ -109,18 +110,34 @@ hpc_sub <- subset(hpc, subset = cell_type %in% target_cts)
 
 p_vln_ctx <- VlnPlot(ctx_sub, features = genes_ctx, group.by = "cell_type", split.by = "Condition",
                      cols = c("Control" = "#4575b4", "AD" = "#d73027"), pt.size = 0, combine = FALSE)
-p_vln_ctx_comb <- wrap_plots(lapply(p_vln_ctx, function(p) {
-  p + theme_pub(base_size = 8) +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1, face = "bold", size = 7.5, color = "black"), legend.position = "none")
-}), ncol = 3)
+plots_cr_ctx <- lapply(seq_along(p_vln_ctx), function(i) {
+  p_vln_ctx[[i]] + ggtitle(genes_ctx[i]) +
+    theme_pub(base_size = 9) +
+    theme(
+      plot.title = element_text(face = "bold.italic", size = 12, hjust = 0.5, color = "black"),
+      axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1, face = "bold", size = 8, color = "black"),
+      legend.title = element_text(face = "bold", size = 9, color = "black")
+    )
+})
+p_vln_ctx_comb <- wrap_plots(plots_cr_ctx, ncol = 3) + 
+  plot_layout(guides = "collect") & 
+  theme(legend.position = "bottom")
 save_plot_pair(p_vln_ctx_comb, file.path(out_dir, "Fig_CrossRegion_02_cortex_expression_violins"), width = 12, height = 7)
 
 p_vln_hpc <- VlnPlot(hpc_sub, features = genes_hpc, group.by = "cell_type", split.by = "Condition",
                      cols = c("Control" = "#4575b4", "AD" = "#d73027"), pt.size = 0, combine = FALSE)
-p_vln_hpc_comb <- wrap_plots(lapply(p_vln_hpc, function(p) {
-  p + theme_pub(base_size = 8) +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1, face = "bold", size = 7.5, color = "black"), legend.position = "none")
-}), ncol = 3)
+plots_cr_hpc <- lapply(seq_along(p_vln_hpc), function(i) {
+  p_vln_hpc[[i]] + ggtitle(genes_hpc[i]) +
+    theme_pub(base_size = 9) +
+    theme(
+      plot.title = element_text(face = "bold.italic", size = 12, hjust = 0.5, color = "black"),
+      axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1, face = "bold", size = 8, color = "black"),
+      legend.title = element_text(face = "bold", size = 9, color = "black")
+    )
+})
+p_vln_hpc_comb <- wrap_plots(plots_cr_hpc, ncol = 3) + 
+  plot_layout(guides = "collect") & 
+  theme(legend.position = "bottom")
 save_plot_pair(p_vln_hpc_comb, file.path(out_dir, "Fig_CrossRegion_03_hippocampus_expression_violins"), width = 12, height = 7)
 
 # 3. Cross-Region DEG Concordance (Correlation between Cortex log2FC and Hippocampus log2FC)

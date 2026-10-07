@@ -137,7 +137,8 @@ prop_df <- hpc@meta.data %>%
   mutate(Proportion = count / sum(count) * 100)
 
 p1i <- ggplot(prop_df, aes(x = Condition, y = Proportion, fill = cell_type)) +
-  geom_bar(stat = "identity", width = 0.65, color = "black", size = 0.2) +
+  geom_bar(stat = "identity", width = 0.72, color = "black", linewidth = 0.3) +
+  scale_x_discrete(expand = expansion(mult = c(0.18, 0.18))) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 100.5)) +
   labs(title = "Cell Composition", x = "Condition", y = "Proportion (%)", fill = "Cell Type") +
   theme_pub()
@@ -189,7 +190,7 @@ save_panel <- function(plt, base_name, w = 7, h = 6) {
 cat("\nSaving Hippocampus Figure 1 panels to:", out_fig1, "\n")
 save_panel(p1a, "Fig1a_hippocampus_condition_umap", w = 7, h = 5.5)
 save_panel(p1b, "Fig1b_hippocampus_celltype_split_umap", w = 10, h = 5.5)
-save_panel(p1i, "Fig1c_hippocampus_celltype_stacked_bar", w = 6, h = 5.5)
+save_panel(p1i, "Fig1c_hippocampus_celltype_stacked_bar", w = 4.8, h = 5.5)
 save_panel(p_inset, "Fig1d_hippocampus_donor_proportion_boxplot", w = 8.5, h = 6.5)
 save_panel(p_markers, "Fig1e_hippocampus_canonical_markers_dotplot", w = 12, h = 6)
 

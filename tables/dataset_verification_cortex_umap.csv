@@ -1,0 +1,11 @@
+Metric,Value
+Total Nuclei,40000
+Total Features,24977
+Number of Donors,8
+Control Nuclei,20000
+AD Nuclei,20000
+Reduction Names,"pca, harmony, umap"
+UMAP_1 Range,"[-12.090, 9.597]"
+UMAP_2 Range,"[-10.320, 9.006]"
+GitHub HEAD Commit,5adddd2010ec9b55697bb1cf7c5e2e5f1915a10b
+Repository Remote,https://github.com/hossainlab/alzheimers-singlecell-hpc-ctx.git

@@ -68,8 +68,9 @@ theme_pub <- function(base_size = 11) {
       legend.text = element_text(size = rel(0.85), color = "black"),
       legend.background = element_blank(),
       legend.key = element_blank(),
-      panel.grid.major = element_line(color = "grey94", linewidth = 0.3),
-      panel.grid.minor = element_blank(),
+      panel.grid = element_blank(),
+      panel.background = element_rect(fill = "white", color = NA),
+      plot.background = element_rect(fill = "white", color = NA),
       strip.background = element_rect(fill = "grey92", color = NA),
       strip.text = element_text(face = "bold", size = rel(0.95), color = "black")
     )
@@ -139,7 +140,7 @@ make_stacked_bar <- function(seurat_sub, thin_thresh = 2.5) {
     ungroup()
 
   p <- ggplot(prop_df, aes(x = Condition, y = Proportion, fill = cell_type)) +
-    geom_bar(stat = "identity", width = 0.6, color = "black", linewidth = 0.3) +
+    geom_bar(stat = "identity", width = 0.72, color = "black", linewidth = 0.3) +
     geom_text(
       data = filter(prop_df, !is_thin),
       aes(y = y_mid, label = pct_text),
@@ -159,6 +160,7 @@ make_stacked_bar <- function(seurat_sub, thin_thresh = 2.5) {
       segment.size = 0.4,
       show.legend = FALSE
     ) +
+    scale_x_discrete(expand = expansion(mult = c(0.18, 0.18))) +
     scale_y_continuous(expand = c(0, 0), limits = c(0, 100.5)) +
     labs(x = "Condition", y = "Cell Type Proportion (%)", fill = "Cell Type") +
     theme_pub() +
@@ -167,7 +169,7 @@ make_stacked_bar <- function(seurat_sub, thin_thresh = 2.5) {
 }
 
 p1c <- make_stacked_bar(hpc, thin_thresh = 2.5)
-save_plot_pair(p1c, file.path(fig1_dir, "Fig1c_hippocampus_celltype_stacked_bar"), width = 7.5, height = 5.5)
+save_plot_pair(p1c, file.path(fig1_dir, "Fig1c_hippocampus_celltype_stacked_bar"), width = 5.2, height = 5.5)
 
 # Fig 1d: Donor Proportion Boxplot with Wilcoxon test
 donor_props_hpc <- hpc@meta.data %>%
@@ -260,16 +262,25 @@ for (ct in target_celltypes) {
     cols = sub_palette,
     pt.size = 0.8
   ) +
-    labs(x = "UMAP 1", y = "UMAP 2", color = "Subtype") +
+    labs(x = "UMAP_1", y = "UMAP_2", color = "Subtype") +
     guides(color = guide_legend(override.aes = list(size = 4, alpha = 1))) +
-    theme_pub()
+    theme_pub() +
+    theme(
+      panel.background = element_rect(fill = "white", color = NA),
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.grid = element_blank()
+    )
   
-  # Panel b: Subtype Markers DotPlot
+  # Panel b: Subtype Markers DotPlot (capped to top 20 markers per cell type for legibility)
   Idents(sub_obj) <- "Subtype"
   sub_markers <- FindAllMarkers(sub_obj, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.25, max.cells.per.ident = 300, verbose = FALSE)
-  top_markers <- sub_markers %>% group_by(cluster) %>% top_n(n = 6, wt = avg_log2FC)
+  top_markers <- sub_markers %>% group_by(cluster) %>% arrange(desc(avg_log2FC)) %>% slice_head(n = max(2, floor(20 / max(1, n_sub))))
+  markers_to_plot <- unique(top_markers$gene)
+  if (length(markers_to_plot) > 20) {
+    markers_to_plot <- head(markers_to_plot, 20)
+  }
   
-  p2b <- DotPlot(sub_obj, features = unique(top_markers$gene), cols = c("#f7f7f7", "#b2182b"), dot.scale = 5) +
+  p2b <- DotPlot(sub_obj, features = markers_to_plot, cols = c("#f7f7f7", "#b2182b"), dot.scale = 5) +
     RotatedAxis() +
     labs(x = "Subtype", y = "Marker Gene", size = "Percent Expressed", color = "Average Expression") +
     coord_flip() +
@@ -604,13 +615,18 @@ p3_vln <- VlnPlot(
   combine = FALSE
 )
 
-p3_vln_combined <- wrap_plots(lapply(p3_vln, function(p) {
-  p + theme_pub(base_size = 8) +
+plots_hpc_3e <- lapply(seq_along(p3_vln), function(i) {
+  p3_vln[[i]] + ggtitle(top_candidates[i]) +
+    theme_pub(base_size = 9) +
     theme(
-      axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1, face = "bold", size = 7.5, color = "black"),
-      legend.position = "none"
+      plot.title = element_text(face = "bold.italic", size = 12, hjust = 0.5, color = "black"),
+      axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1, face = "bold", size = 8, color = "black"),
+      legend.title = element_text(face = "bold", size = 9, color = "black")
     )
-}), ncol = 3)
+})
+p3_vln_combined <- wrap_plots(plots_hpc_3e, ncol = 3) + 
+  plot_layout(guides = "collect") & 
+  theme(legend.position = "bottom")
 save_plot_pair(p3_vln_combined, file.path(fig3_dir, "Fig3e_hippocampus_expression_violins"), width = 12, height = 7)
 
 # Fig 3g: Consensus score ranking in Hippocampus
