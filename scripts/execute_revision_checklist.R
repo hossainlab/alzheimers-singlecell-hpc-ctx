@@ -494,13 +494,13 @@ cr_avail_genes <- intersect(plot_box_genes, intersect(rownames(ctx_focus_sub), r
 
 p_dot_cr_ctx <- DotPlot(ctx_focus_sub, features = cr_avail_genes, group.by = "cell_type", split.by = "Condition",
                         cols = c("#4575b4", "#d73027"), dot.scale = 5.5) +
-  RotatedAxis() + labs(title = "Cortex", x = "Target Gene", y = "Lineage", size = "% Expressing", color = "Expression") +
-  theme_pub_clean(base_size = 9) + theme(plot.title = element_text(face = "bold", size = 11, hjust = 0.5), axis.text.x = element_text(face = "bold.italic"))
+  RotatedAxis() + labs(x = "Target Gene", y = "Cortex Lineage", size = "% Expressing", color = "Expression") +
+  theme_pub_clean(base_size = 9) + theme(plot.title = element_blank(), axis.text.x = element_text(face = "bold.italic"))
 
 p_dot_cr_hpc <- DotPlot(hpc_focus_sub, features = cr_avail_genes, group.by = "cell_type", split.by = "Condition",
                         cols = c("#4575b4", "#d73027"), dot.scale = 5.5) +
-  RotatedAxis() + labs(title = "Hippocampus", x = "Target Gene", y = "Lineage", size = "% Expressing", color = "Expression") +
-  theme_pub_clean(base_size = 9) + theme(plot.title = element_text(face = "bold", size = 11, hjust = 0.5), axis.text.x = element_text(face = "bold.italic"))
+  RotatedAxis() + labs(x = "Target Gene", y = "Hippocampus Lineage", size = "% Expressing", color = "Expression") +
+  theme_pub_clean(base_size = 9) + theme(plot.title = element_blank(), axis.text.x = element_text(face = "bold.italic"))
 
 p_dot_cr_combined <- (p_dot_cr_ctx / p_dot_cr_hpc) + plot_layout(guides = "collect") & theme(legend.position = "right")
 save_plot_pair(p_dot_cr_combined, file.path(cross_dir, "Fig_CrossRegion_02_expression_dotplots"), width = 10, height = 7.5)
@@ -583,7 +583,7 @@ pheatmap(
   fontsize = 9,
   fontsize_row = 8,
   fontsize_col = 10,
-  main = "Hippocampus Convergent Genes: log2(Fold Change) Across Lineages (AD vs Control)",
+  main = NA,
   angle_col = "45",
   border_color = "grey80"
 )
@@ -599,7 +599,7 @@ pheatmap(
   fontsize = 9,
   fontsize_row = 8,
   fontsize_col = 10,
-  main = "Hippocampus Convergent Genes: log2(Fold Change) Across Lineages",
+  main = NA,
   angle_col = "45",
   border_color = "grey80"
 )
@@ -637,11 +637,11 @@ p_top5_vln <- ggplot(expr_top5_long, aes(x = cell_type, y = Expression, fill = C
   geom_boxplot(width = 0.18, position = position_dodge(0.8), outlier.shape = NA, alpha = 0.85, color = "black", linewidth = 0.35) +
   facet_wrap(~Gene, scales = "free_y", ncol = 2) +
   scale_fill_manual(values = c("Control" = "#4575b4", "AD" = "#d73027")) +
-  labs(x = "Cell Lineage", y = "Single-Nucleus log-Normalized Expression", title = "Top 5 Consensus Targets: Violin & Box Plot Distributions") +
+  labs(x = "Cell Lineage", y = "Single-Nucleus log-Normalized Expression") +
   theme_pub_clean(base_size = 10) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, face = "bold", size = 9),
         strip.text = element_text(face = "bold.italic", size = 11),
-        plot.title = element_text(face = "bold", size = 12, hjust = 0.5),
+        plot.title = element_blank(),
         legend.position = "bottom")
 save_plot_pair(p_top5_vln, file.path(hpc_fig5_dir, "Fig5_top5_consensus_violin_boxplots"), width = 10.5, height = 9.0)
 
@@ -656,10 +656,10 @@ p_top5_donor_box <- ggplot(top5_donor_expr, aes(x = Condition, y = Mean_Expressi
   facet_grid(Gene ~ cell_type, scales = "free_y") +
   scale_fill_manual(values = c("Control" = "#4575b4", "AD" = "#d73027")) +
   stat_compare_means(method = "wilcox.test", label = "p.signif", label.x.npc = "center", vjust = -0.3, size = 3.6) +
-  labs(x = "Clinical Condition", y = "Donor Mean Expression", title = "Top 5 Consensus Genes: Donor-Resolved Wilcoxon Tests") +
+  labs(x = "Clinical Condition", y = "Donor Mean Expression") +
   theme_pub_clean(base_size = 9) +
   theme(strip.text = element_text(face = "bold", size = 8.5),
-        plot.title = element_text(face = "bold", size = 11, hjust = 0.5),
+        plot.title = element_blank(),
         legend.position = "none")
 save_plot_pair(p_top5_donor_box, file.path(hpc_fig5_dir, "Fig5_top5_donor_boxplots"), width = 11, height = 8.5)
 
@@ -717,10 +717,9 @@ p_seq_ident <- ggplot(top5_orthology_plot, aes(x = Gene, y = Protein_Seq_Identit
   scale_fill_gradient(low = "#4575b4", high = "#d73027", name = "In Vivo\nSuitability") +
   coord_flip() +
   scale_y_continuous(limits = c(0, 105), expand = c(0, 0)) +
-  labs(x = "Top 5 Consensus Targets", y = "Human-to-Mouse Protein Sequence Identity (%)",
-       title = "Cross-Species Sequence Conservation of Top 5 Prioritized Targets") +
+  labs(x = "Top 5 Consensus Targets", y = "Human-to-Mouse Protein Sequence Identity (%)") +
   theme_pub_clean() +
-  theme(plot.title = element_text(face = "bold", size = 11, hjust = 0.5),
+  theme(plot.title = element_blank(),
         axis.text.y = element_text(face = "bold.italic", size = 10, color = "black"))
 save_plot_pair(p_seq_ident, file.path(hpc_fig5_dir, "Fig5_top5_sequence_conservation_barplot"), width = 8.5, height = 4.8)
 
@@ -768,9 +767,8 @@ p_path_net <- ggraph(g_top5_path, layout = "stress") +
                      name = "Network Entity") +
   scale_size_manual(values = c("Top 5 Target" = 8, "Pathological Axis Hallmark" = 10, "Interacting Mediator" = 5.5),
                     name = "Network Entity") +
-  labs(title = "Pathological Axis Integration Network of Top 5 Prioritized Consensus Targets") +
   theme_void() +
-  theme(plot.title = element_text(face = "bold", size = 12, hjust = 0.5),
+  theme(plot.title = element_blank(),
         legend.position = "right",
         legend.title = element_text(face = "bold", size = 9.5))
 save_plot_pair(p_path_net, file.path(hpc_fig5_dir, "Fig5_top5_pathological_axis_network"), width = 9.0, height = 6.5)
@@ -848,9 +846,8 @@ p_ppi_axis <- ggraph(g_integrated_ppi, layout = "stress") +
                      name = "Pathological Module") +
   scale_size_manual(values = c("Stress / MAPK Axis" = 8, "Neuroinflammation Axis" = 8, "Vascular / NVU Matrix Axis" = 8),
                     name = "Pathological Module") +
-  labs(title = "Integrated PPI & Pathological Axis Network: Stress, Neuroinflammation & NVU Axes") +
   theme_void() +
-  theme(plot.title = element_text(face = "bold", size = 12, hjust = 0.5),
+  theme(plot.title = element_blank(),
         legend.position = "right",
         legend.title = element_text(face = "bold", size = 10))
 save_plot_pair(p_ppi_axis, file.path(cross_dir, "Fig_CrossRegion_06_ppi_pathological_axis_network"), width = 9.8, height = 6.8)
