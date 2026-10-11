@@ -1,6 +1,19 @@
 # ==============================================================================
 # Script 02a: Process Cortex Samples (n = 8)
 # GSM4982100 - GSM4982107 (4 Control, 4 AD)
+#
+# Quality control follows single-cell best practices (sc-best-practices / OSCA):
+#   1. Per-sample QC metrics: library size, detected genes, MT%, ribosomal %, haemoglobin %
+#   2. Per-sample, data-driven outlier detection with median absolute deviations (MADs)
+#        - log10 library size and log10 detected genes: 5 MADs (two-sided, permissive)
+#        - MT%: 3 MADs (upper), applied only above a 1% floor, plus a hard 5% ceiling.
+#          Nuclear MT% is near zero, so the MAD can collapse to 0; the floor stops
+#          nuclei with trace (<1%) MT reads being flagged as damaged.
+#        - hard floor of 200 detected genes
+#   3. Per-sample doublet detection with scDblFinder on QC-passing nuclei
+#   4. No downsampling: every nucleus passing QC and doublet removal is retained
+#   5. Gene filtering after merge: genes detected in >= 10 nuclei
+# Per-nucleus QC calls are written to tables/ for the QC figure suite (02c).
 # ==============================================================================
 
 suppressPackageStartupMessages({
@@ -9,7 +22,20 @@ suppressPackageStartupMessages({
   library(dplyr)
   library(readr)
   library(ggplot2)
+  library(scuttle)
+  library(scDblFinder)
+  library(SingleCellExperiment)
+  library(BiocParallel)
 })
+
+# QC parameters
+nmads_counts   <- 5
+nmads_genes    <- 5
+nmads_mt       <- 3
+max_mt_pct     <- 5
+min_mt_pct     <- 1
+min_genes      <- 200
+min_gene_cells <- 10
 
 cat("=== Starting Cortex Preprocessing ===\n")
 meta_df <- read_csv("tables/GSE163577_sample_metadata.csv", show_col_types = FALSE)
@@ -19,7 +45,10 @@ cat("Found", nrow(ctx_meta), "Cortex samples:\n")
 print(ctx_meta[, c("gsm", "title", "condition", "cells")])
 
 dir.create("data", showWarnings = FALSE)
+dir.create("tables", showWarnings = FALSE)
 sobj_list <- list()
+qc_cells_list <- list()
+qc_sample_list <- list()
 
 # Process each Cortex sample
 for (i in 1:nrow(ctx_meta)) {
@@ -27,54 +56,98 @@ for (i in 1:nrow(ctx_meta)) {
   gsm <- row$gsm
   raw_dir <- if (dir.exists("data/GSE163577_RAW")) "data/GSE163577_RAW" else "GSE163577_RAW"
   tar_path <- file.path(raw_dir, row$filename)
-  
+
   cat(sprintf("\n[%d/%d] Reading %s (%s, %s)...\n", i, nrow(ctx_meta), gsm, row$title, row$condition))
-  
+
   tmp_dir <- file.path(tempdir(), paste0("ctx_", gsm))
   if (dir.exists(tmp_dir)) unlink(tmp_dir, recursive = TRUE)
   dir.create(tmp_dir, recursive = TRUE)
-  
+
   untar(tar_path, exdir = tmp_dir)
   sub_dirs <- list.dirs(tmp_dir, recursive = FALSE)
   data_dir <- if (length(sub_dirs) > 0) sub_dirs[1] else tmp_dir
-  
+
   counts <- Read10X(data.dir = data_dir)
   unlink(tmp_dir, recursive = TRUE)
-  
-  # Nuclei QC
-  sobj <- CreateSeuratObject(counts = counts, project = gsm, min.cells = 3, min.features = 200)
+
+  sobj <- CreateSeuratObject(counts = counts, project = gsm, min.cells = 0, min.features = 0)
   sobj$GSM <- gsm
   sobj$Title <- row$title
   sobj$Region <- "Cortex"
   sobj$Condition <- row$condition
   sobj$Sample_ID <- paste0("Ctx_", row$condition, "_", gsm)
-  
-  sobj[["percent.mt"]] <- PercentageFeatureSet(sobj, pattern = "^MT-")
-  sobj[["percent.ribo"]] <- PercentageFeatureSet(sobj, pattern = "^RP[SL]")
-  
-  # Standard nuclear snRNA-seq filter
-  n_raw <- ncol(sobj)
-  sobj <- subset(sobj, subset = nFeature_RNA >= 300 & nFeature_RNA <= 6500 & 
-                                nCount_RNA >= 500 & nCount_RNA <= 25000 & 
-                                percent.mt <= 5)
-  n_clean <- ncol(sobj)
-  cat(sprintf("  Raw: %d -> QC Passed: %d (%.1f%%)\n", n_raw, n_clean, 100 * n_clean / n_raw))
-  
-  # Cap per sample to 5,000 cells max if needed for memory & balance, keeping high-quality cells
-  if (ncol(sobj) > 5000) {
-    set.seed(42)
-    sobj <- subset(sobj, cells = sample(colnames(sobj), 5000))
-    cat(sprintf("  Sampled to 5,000 representative cells for balanced representation.\n"))
-  }
-  
+
+  # QC metrics (human gene symbols)
+  sobj[["percent.mt"]]   <- PercentageFeatureSet(sobj, pattern = "^MT-")
+  sobj[["percent.ribo"]] <- PercentageFeatureSet(sobj, pattern = "^RP[SL][0-9]")
+  sobj[["percent.hb"]]   <- PercentageFeatureSet(sobj, pattern = "^HB[^(P)]")
+
+  # Per-sample MAD-based outlier detection
+  md <- sobj@meta.data
+  out_counts <- isOutlier(md$nCount_RNA, nmads = nmads_counts, type = "both", log = TRUE)
+  out_genes  <- isOutlier(md$nFeature_RNA, nmads = nmads_genes, type = "both", log = TRUE)
+  out_mt     <- isOutlier(md$percent.mt, nmads = nmads_mt, type = "higher")
+  thr_mt  <- min(max(attr(out_mt, "thresholds")[["higher"]], min_mt_pct), max_mt_pct)
+  fail_qc <- as.vector(out_counts) | as.vector(out_genes) |
+    md$percent.mt > thr_mt | md$nFeature_RNA < min_genes
+
+  # Doublet detection on QC-passing nuclei
+  pass_cells <- colnames(sobj)[!fail_qc]
+  sce <- SingleCellExperiment(list(counts = GetAssayData(sobj, layer = "counts")[, pass_cells]))
+  set.seed(42)
+  sce <- scDblFinder(sce, BPPARAM = SerialParam(RNGseed = 42))
+  dbl_class <- setNames(as.character(sce$scDblFinder.class), colnames(sce))
+  dbl_score <- setNames(sce$scDblFinder.score, colnames(sce))
+  rm(sce)
+
+  qc_status <- ifelse(fail_qc, "Low quality", ifelse(dbl_class[colnames(sobj)] == "doublet", "Doublet", "Pass"))
+  sobj$qc_status <- qc_status
+  sobj$scDblFinder_score <- unname(dbl_score[colnames(sobj)])
+
+  qc_cells_list[[gsm]] <- sobj@meta.data %>%
+    mutate(cell = paste0(gsm, "_", colnames(sobj))) %>%
+    select(cell, GSM, Title, Region, Condition, nCount_RNA, nFeature_RNA,
+           percent.mt, percent.ribo, percent.hb, scDblFinder_score, qc_status)
+
+  thr_counts <- attr(out_counts, "thresholds")
+  thr_genes  <- attr(out_genes, "thresholds")
+  qc_sample_list[[gsm]] <- data.frame(
+    GSM = gsm, Region = "Cortex", Condition = row$condition,
+    Nuclei_Input = ncol(sobj),
+    Low_Quality = sum(qc_status == "Low quality"),
+    Doublets = sum(qc_status == "Doublet"),
+    Nuclei_Retained = sum(qc_status == "Pass"),
+    Min_UMI = thr_counts[["lower"]], Max_UMI = thr_counts[["higher"]],
+    Min_Genes = max(thr_genes[["lower"]], min_genes), Max_Genes = thr_genes[["higher"]],
+    Max_MT_Pct = thr_mt
+  )
+
+  sobj <- subset(sobj, cells = colnames(sobj)[qc_status == "Pass"])
+  cat(sprintf("  Input: %d | Low quality: %d | Doublets: %d | Retained: %d (%.1f%%)\n",
+              qc_sample_list[[gsm]]$Nuclei_Input, qc_sample_list[[gsm]]$Low_Quality,
+              qc_sample_list[[gsm]]$Doublets, ncol(sobj),
+              100 * ncol(sobj) / qc_sample_list[[gsm]]$Nuclei_Input))
+
   sobj_list[[gsm]] <- sobj
   gc()
 }
+
+qc_cells  <- bind_rows(qc_cells_list)
+qc_sample <- bind_rows(qc_sample_list)
+write_csv(qc_cells, "tables/qc_cell_metrics_cortex.csv.gz")
+write_csv(qc_sample, "tables/qc_sample_summary_cortex.csv")
+cat("\nPer-sample QC summary:\n")
+print(qc_sample)
 
 cat("\nMerging Cortex Seurat objects...\n")
 cortex_merged <- merge(sobj_list[[1]], y = sobj_list[-1], add.cell.ids = names(sobj_list), project = "AD_Cortex")
 rm(sobj_list)
 gc()
+
+# Gene filtering: keep genes detected in >= min_gene_cells nuclei
+cortex_merged[["RNA"]] <- JoinLayers(cortex_merged[["RNA"]])
+gene_cells <- Matrix::rowSums(GetAssayData(cortex_merged, layer = "counts") > 0)
+cortex_merged <- subset(cortex_merged, features = names(gene_cells)[gene_cells >= min_gene_cells])
 
 cat("Cortex merged object dimensions:\n")
 print(cortex_merged)

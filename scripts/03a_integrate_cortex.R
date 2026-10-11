@@ -13,6 +13,7 @@ suppressPackageStartupMessages({
   library(ggpubr)
   library(viridis)
   library(RColorBrewer)
+  library(ggrepel)
 })
 
 cat("=== Step 3a: Loading Preprocessed Cortex Data ===\n")
@@ -105,7 +106,14 @@ theme_pub <- function(base_size = 11) {
     )
 }
 
-# 1. Panel A: UMAP colored by Condition
+# 1. Panel A: UMAP colored by Condition, all cell types labelled at their centroids
+umap_df <- as.data.frame(Embeddings(cortex, "umap"))
+colnames(umap_df) <- c("UMAP_1", "UMAP_2")
+umap_df$cell_type <- cortex$cell_type
+label_df <- umap_df %>%
+  group_by(cell_type) %>%
+  summarise(UMAP_1 = median(UMAP_1), UMAP_2 = median(UMAP_2), .groups = "drop")
+
 p1a <- DimPlot(
   cortex,
   group.by = "Condition",
@@ -113,8 +121,25 @@ p1a <- DimPlot(
   pt.size = 0.4,
   alpha = 0.8
 ) +
-  labs(title = "Cortex: Cellular Landscape", x = "UMAP_1", y = "UMAP_2") +
-  theme_pub()
+  geom_label_repel(
+    data = label_df,
+    aes(x = UMAP_1, y = UMAP_2, label = cell_type),
+    inherit.aes = FALSE,
+    size = 3.4, fontface = "bold", color = "black",
+    fill = alpha("white", 0.85), label.size = 0.2,
+    box.padding = 0.4, min.segment.length = 0, seed = 42
+  ) +
+  scale_y_continuous(breaks = seq(-10, 10, 5)) +
+  expand_limits(y = c(-10, 10)) +
+  labs(x = "UMAP 1", y = "UMAP 2", color = "Condition") +
+  guides(color = guide_legend(override.aes = list(size = 4, alpha = 1))) +
+  theme_pub() +
+  theme(
+    plot.title = element_blank(),
+    panel.grid = element_blank(),
+    panel.background = element_rect(fill = "white", color = NA),
+    plot.background = element_rect(fill = "white", color = NA)
+  )
 
 # 2. Panel B: Split UMAP by Condition with Cell Types
 p1b <- DimPlot(

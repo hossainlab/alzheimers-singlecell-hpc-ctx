@@ -40,7 +40,7 @@ theme_pub <- function(base_size = 11) {
       legend.text = element_text(size = rel(0.85), color = "black"),
       legend.background = element_blank(),
       legend.key = element_blank(),
-      panel.grid.major = element_line(color = "grey94", linewidth = 0.3),
+      panel.grid.major = element_blank(),
       panel.grid.minor = element_blank(),
       strip.background = element_rect(fill = "grey92", color = NA),
       strip.text = element_text(face = "bold", size = rel(0.95), color = "black")
