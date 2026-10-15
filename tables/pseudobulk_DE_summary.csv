@@ -1,0 +1,11 @@
+region,cell_type,n_control,n_AD,median_nuclei_per_sample,genes_tested,padj05,padj05_flagged_contamination,padj05_flagged_genotype_sex,robust_up,robust_down
+Hippocampus,Microglia,8,9,233,3789,30,1,0,4,25
+Hippocampus,Endothelial,8,9,1904,10797,124,4,0,29,89
+Hippocampus,Pericyte,8,9,872,9287,381,7,0,150,210
+Hippocampus,Astrocyte,8,9,1420,10983,46,1,0,9,33
+Hippocampus,Oligodendrocyte,8,9,2066,10104,70,0,1,15,50
+Cortex,Microglia,4,4,274,5829,3,0,0,1,2
+Cortex,Endothelial,4,4,2986,11192,22,1,1,1,19
+Cortex,Pericyte,4,4,1920,11354,0,0,0,0,0
+Cortex,Astrocyte,4,4,1495,11641,7,0,0,3,4
+Cortex,Oligodendrocyte,4,4,2327,11067,0,0,0,0,0

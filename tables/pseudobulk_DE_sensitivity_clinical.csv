@@ -1,0 +1,11 @@
+cell_type,model,n_samples,primary_robust,retained_FDR05,same_sign_pct,lfc_correlation_all_genes,module_genes_FDR05
+Microglia,+ age + PMI,17,29,25,100.0,0.979,"ADAMTS9,SLC2A3"
+Microglia,excluding acute-hypoxic donors,15,29,14,100.0,0.923,"ADAMTS9,SLC2A3"
+Endothelial,+ age + PMI,17,118,93,100.0,0.981,"ADAMTS9,VEGFA,HILPDA,ELL2"
+Endothelial,excluding acute-hypoxic donors,15,118,24,100.0,0.898,"ADAMTS9,ELL2"
+Pericyte,+ age + PMI,17,360,283,100.0,0.987,"ADAMTS9,VEGFA,SLC2A3,PDK1,BNIP3L,ELL2"
+Pericyte,excluding acute-hypoxic donors,15,360,140,100.0,0.937,"ADAMTS9,SLC2A3,PDK1,BNIP3L,ELL2"
+Astrocyte,+ age + PMI,17,42,18,100.0,0.954,"VEGFA,HILPDA,ELL2,HIF1A"
+Astrocyte,excluding acute-hypoxic donors,15,42,3,100.0,0.883,
+Oligodendrocyte,+ age + PMI,17,65,29,100.0,0.966,ADAMTS9
+Oligodendrocyte,excluding acute-hypoxic donors,15,65,1,100.0,0.897,ADAMTS9

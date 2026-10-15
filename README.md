@@ -1,239 +1,148 @@
-# Single-Cell Transcriptomic Identification of Alzheimer’s Disease-Associated Molecular Targets and CNS–Peripheral Immune Signatures for Experimental Validation and Therapeutic Intervention
+# Donor-level single-nucleus analysis of the neurovascular unit in Alzheimer's disease (GSE163577)
 
-[![R](https://img.shields.io/badge/R-4.6.1-blue.svg)](https://www.r-project.org/)
-[![Seurat](https://img.shields.io/badge/Seurat-v5.0-green.svg)](https://satijalab.org/seurat/)
-[![CellChat](https://img.shields.io/badge/CellChat-v2.2-orange.svg)](https://github.com/jinworks/CellChat)
-[![Dataset](https://img.shields.io/badge/GEO-GSE163577-purple.svg)](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE163577)
+Re-analysis of the VINE-seq human brain vascular atlas (Yang *et al.*, *Nature* 603:885, 2022; GEO
+**GSE163577**). The data are hippocampus from 9 AD and 8 control donors, plus superior frontal cortex from
+**8 of the same donors** (4 AD, 4 control). The pipeline is written in Python (scanpy / Harmony / pydeseq2 /
+LIANA resource / gseapy). It runs end-to-end from the 25 GEO filtered matrices, with no down-sampling and no
+hand-entered results.
 
----
-
-## 🔬 Study Overview
-
-This repository houses the complete, reproducible end-to-end single-nucleus RNA sequencing (snRNA-seq) analytical workflow for the study **"Single-Cell Transcriptomic Identification of Alzheimer’s Disease-Associated Molecular Targets and CNS–Peripheral Immune Signatures for Experimental Validation and Therapeutic Intervention"**.
-
-The analysis interrogates **GSE163577**, comprising high-throughput single-nucleus transcriptomes from the human **Prefrontal Cortex (Ctx)** and **Hippocampus (Hpc)** of clinically and neuropathologically verified **Alzheimer's Disease (AD)** donors alongside age-matched cognitively intact **Control** individuals. The analytical pipeline centers on resolving disease pathogenesis, neurovascular unit (NVU) disruption, cross-cell molecular convergence, and intercellular communication rewiring across five essential glial and vascular cell types:
-1. **Microglia** (Innate neuroimmune surveillance and phagocytosis)
-2. **Endothelial Cells** (Blood–brain barrier core endothelium)
-3. **Pericytes** (Mural vascular integrity and basement membrane regulation)
-4. **Astrocytes** (Metabolic coupling and neurovascular maintenance)
-5. **Oligodendrocytes** (Myelination and trophic support)
+> The earlier R/Seurat/CellChat pipeline, together with its tables and figures, has been moved to
+> [`legacy/`](legacy/README.md). It is kept only for provenance. That file lists each problem found in it and how
+> it was fixed here: per-nucleus pseudoreplicated DE, genotype- and ambient-driven "targets", same-donor cortex
+> presented as validation, hard-coded Fig. 5 validation values, and correlation networks labelled as STRING.
 
 ---
 
-## 📋 The 8-Step Analytical Framework
+## Design principles
 
-The study rigorously adheres to an 8-step single-cell systems biology framework:
+| Issue | How it is handled |
+|---|---|
+| Unit of replication | Each **sample** (one donor × one region). All AD-vs-control statistics are donor-level: pseudobulk DESeq2, Mann–Whitney tests on per-sample proportions, and per-sample OLS for ligand–receptor scores. |
+| VINE-seq enrichment yield | The vascular fraction is far lower in AD samples (Fig. 1f). Its logit is a covariate in every DE model. Cell-type proportions are shown per donor and are described as yield-dependent. |
+| Ambient RNA / heterotypic doublets | Doublets are called per sample with scrublet. Clusters co-expressing two lineages' key markers are removed (`tables/cluster_annotation.csv`). Each DE gene is flagged if it is ≥ 5× more abundant in another cell type **and** tracks that cell type's fraction across samples (ρ ≥ 0.5). |
+| Donor genotype and sex | Sex is inferred from XIST/chrY. The 17q21.31 copy-number marker ARL17B is bimodal across donors (FigS1g). Genes in that locus and sex-chromosome genes are excluded from HVGs and flagged in DE. Sex is a covariate. |
+| Same donors in both regions | Donor IDs are harmonised across regions; sex agrees for 8/8 pairs and genotype for 7/8. The hippocampus is the discovery set. Cortex is reported as **a second tissue from the same donors**, not as independent replication. |
+| Annotation / validation | Every value is computed: UniProt localisation, human–mouse identity by Needleman–Wunsch alignment, STRING v12 edges (score ≥ 0.7) with exact-name ID mapping. Claims with no data behind them (5xFAD, ROSMAP, antibody catalogue) were removed. |
 
-| Step | Analysis Phase | Description | Key Scripts | Key Outputs & Visualizations |
-| :---: | :--- | :--- | :--- | :--- |
-| **1** | **QC & Preprocessing** | Nuclear filtering, ambient RNA assessment, mitochondrial cutoff, doublet removal, count normalization | `scripts/01_*.R`<br>`scripts/02*.R` | `tables/GSE163577_sample_metadata.csv`<br>`data/*_qc.rds` |
-| **2** | **Integration & Clustering** | Batch correction, Harmony/Seurat PCA, UMAP dimensionality reduction, canonical marker annotation | `scripts/03a_integrate_cortex.R`<br>`scripts/03b_integrate_hippocampus.R` | `data/seurat_*_annotated.rds`<br>`Cortex/Fig1_*`, `Hippocampus/Fig1_*` |
-| **3** | **Differential Expression (Core)** | Cell-type-specific Wilcoxon/MAST DEG testing across AD vs Control (FDR < 0.05, \|log2FC\| ≥ 0.25) | `scripts/04_*.R`<br>`scripts/process_hippocampus_*.R` | `tables/DEGs_*.csv`<br>`Cortex/Fig2_*`, `Hippocampus/Fig2_*` |
-| **4** | **Functional Enrichment** | Hypergeometric overrepresentation testing across KEGG Pathways and Gene Ontology (BP, MF, CC) | `scripts/04_*.R`<br>`scripts/05_*.R` | `Cortex/Fig2f`, `Fig2g`<br>`Hippocampus/Fig2f`, `Fig2g` |
-| **5** | **Cell–Cell Communication** | CellChat v2.2 mass-action modeling of ligand–receptor signaling networks, information flow, and circos paths | `scripts/06_*.R`<br>`scripts/finish_hippocampus_*.R` | `Cortex/Fig4_*`, `Hippocampus/Fig4_*`<br>`tables/CellChat_interactions_*.csv` |
-| **6** | **PPI Networks** | STRING v12 / igraph protein–protein interaction network modeling, Louvain clustering, hub identification | `scripts/04_*.R`<br>`scripts/05_*.R` | `Cortex/Fig2h`, `Fig3d`<br>`Hippocampus/Fig2h`, `Fig3d` |
-| **7** | **Target Prioritization & Validation** | Dual-region concordance (Cortex vs Hippocampus), CTPS ranking, and in silico cross-species orthology | `scripts/05_*.R`<br>`scripts/07_*.R` | `tables/consensus_target_prioritization_full.csv`<br>`Cross_Region_Comparison/` |
-| **8** | **Single Panel Publication Exports** | High-resolution publication-ready vector PDFs and 300-DPI PNGs structured in clean figure folders | `scripts/reorganize_option1.ps1` | `Cortex/`, `Hippocampus/`, `Cross_Region_Comparison/` |
+## Pipeline (`scripts/`)
 
----
+| Step | Script | Main outputs |
+|---|---|---|
+| 1 | `01_qc_doublets.py` | Per-sample MAD QC (log UMI and log genes, 5 MAD; %MT 3 MAD capped at 5 %; ≥ 200 genes), scrublet (fixed 0.25 cut-off when the automatic threshold fails), sex and 17q21.31 inference → `data/processed/qc_counts.h5ad`, `tables/qc_*`, `tables/sample_metadata.csv`, `tables/donor_pairing_concordance.csv` |
+| 2 | `02_integrate_annotate.py` | Joint Hpc + Ctx object, per-sample seurat_v3 HVGs, PCA, Harmony on sample, Leiden, rule-based cluster annotation, vascular yield → `data/processed/integrated.h5ad`, `tables/cluster_annotation.csv`, `tables/celltype_counts_per_sample.csv` |
+| 3 | `03_fig1_global_landscape.py` | **Fig. 1**: all cells, both regions |
+| 4 | `04_pseudobulk_de.py` | DESeq2 `~ sex + vascular_yield + condition` for 5 NVU cell types × 2 regions, artefact flags, sensitivity analysis without the yield term → `tables/pseudobulk_DE_*.csv` |
+| 5 | `05_fig2_deep_dives.py` | **Fig. 2a–e**: one figure per NVU cell type (sub-clusters, donor-level proportions, volcanoes, donor heat map, pre-ranked GSEA) → `tables/Fig2_*`, `tables/GSEA_*` |
+| 6 | `06_fig3_convergence.py` | **Fig. 3**: cross-cell-type convergence, Hpc vs Ctx concordance, test of the legacy IEG claim |
+| 7 | `07_fig4_cell_communication.py` | **Fig. 4**: per-sample L–R scores (LIANA consensus resource + APP–SORL1), donor-level differential test |
+| 8 | `08_fig5_target_prioritization.py` | **Fig. 5**: transparent ranking with UniProt/STRING annotation → `tables/target_prioritization.csv`, `tables/target_annotation_top.csv`, `tables/STRING_edges.csv` |
+| 9 | `09_qc_figures.py` | **Fig. S1**: QC, retention, sex and genotype |
+| 10 | `10_donor_covariates.py` | **Fig. S2**: donor clinical covariates from Yang *et al.* Supplementary Table 1 (age, PMI, Braak/CERAD, APOE, neuropathology notes), the hypoxia-module score, covariate-adjusted models and DE sensitivity → `tables/donor_clinical_metadata.csv`, `tables/covariate_balance.csv`, `tables/hypoxia_module_*.csv`, `tables/pseudobulk_DE_sensitivity_clinical.csv`, `tables/validation_power_estimates.csv` |
 
-## 📁 Repository Structure
+Run everything with `python scripts/run_all.py`, using the environment in `environment.yml`. Settings and the
+sample/donor parser are in `scripts/config.py`. Gene-set libraries (MSigDB Hallmark 2020, GO-BP 2023, Reactome
+2022 from Enrichr) are cached in `data/genesets/`. UniProt and STRING responses are cached in `data/annotation/`.
 
-```
-alzheimers-singlecell-hpc-ctx/
-│
-├── data/                            # Raw matrices and processed RDS objects
-│   ├── GSE163577_RAW/               # Raw 10x Genomics matrices (.tar.gz) from GEO
-│   ├── seurat_cortex_annotated.rds  # Full annotated Prefrontal Cortex snRNA-seq object
-│   ├── seurat_hpc_annotated.rds     # Full annotated Hippocampus snRNA-seq object
-│   ├── fig2_results_cortex.rds      # Target cell subclusters, DEGs, and enrichment results
-│   ├── cellchat_test_merged.rds     # Comparative CellChat (Control vs AD) merged cortex object
-│   └── cellchat_hpc_merged.rds      # Comparative CellChat (Control vs AD) merged hippocampus object
-│
-├── scripts/                         # Numbered, reproducible snRNA-seq analysis pipeline
-│   ├── 01_data_exploration_and_metadata.R      # Step 1: GEO matrix discovery and metadata extraction
-│   ├── 02a_process_cortex.R                    # Step 2a: Cortex snRNA-seq QC filtering and merging
-│   ├── 02b_process_hippocampus.R               # Step 2b: Hippocampus snRNA-seq QC filtering and merging
-│   ├── 02c_qc_and_filtering_figures.R          # Step 2c: Empirical QC figure suite & reviewer defense
-│   ├── 03a_integrate_cortex.R                  # Step 3a: Cortex Harmony integration, annotation & Fig 1
-│   ├── 03b_integrate_hippocampus.R             # Step 3b: Hippocampus Harmony integration, annotation & Fig 1
-│   ├── 04a_cortex_subclustering_and_degs.R     # Step 4a: Cortex 6-lineage deep dives, Wilcoxon DEGs & Fig 2
-│   ├── 04b_hippocampus_subclustering_and_degs.R # Step 4b: Hippocampus 6-lineage deep dives, DEGs & Fig 2
-│   ├── 05a_cortex_cross_cell_convergence.R     # Step 5a: Cortex cross-cell convergence, CTPS ranking & Fig 3
-│   ├── 05b_hippocampus_cross_cell_convergence.R # Step 5b: Hippocampus cross-cell convergence & Fig 3
-│   ├── 06a_cortex_cell_cell_communication.R    # Step 6a: Cortex CellChat v2.2 crosstalk modeling & Fig 4
-│   ├── 06b_hippocampus_cell_cell_communication.R # Step 6b: Hippocampus CellChat crosstalk modeling & Fig 4
-│   ├── 07a_cortex_target_validation.R          # Step 7a: Cortex in silico target validation & Fig 5
-│   ├── 07b_hippocampus_target_validation.R     # Step 7b: Hippocampus in silico target validation & Fig 5
-│   ├── 08_cross_region_comparison.R            # Step 8: Head-to-head Cortex vs Hippocampus comparison
-│   ├── process_cortex_all_analyses.R           # Master runner: Prefrontal Cortex end-to-end
-│   ├── process_hippocampus_all_analyses.R      # Master runner: Hippocampus end-to-end
-│   ├── explore_samples.py                      # Python utility: Sample discovery and statistics
-│   ├── parse_metadata.py                       # Python utility: NCBI GEO metadata extractor
-│   └── show_top_targets.py                     # Python utility: CTPS ranking inspection
-│
-├── tables/                          # Quantified differential expression, enrichment, and communication tables
-│   ├── GSE163577_sample_metadata.csv           # Complete sample-level clinical and technical metadata
-│   ├── sample_qc_retention_rates.csv           # Donor-level initial vs filtered nuclei retention rates
-│   ├── DEGs_Cortex_*.csv                       # Cortex differential expression statistics per cell type
-│   ├── DEGs_Hippocampus_*.csv                  # Hippocampus differential expression statistics per cell type
-│   ├── consensus_target_prioritization_full.csv # Ranked cross-cell convergent therapeutic targets
-│   ├── top5_prioritized_therapeutic_targets.csv # Top 5 multi-factorial therapeutic target candidates
-│   ├── top5_canonical_protein_targets.csv      # Top 5 canonical protein-coding therapeutic targets
-│   ├── target_in_silico_validation_metrics.csv # Cross-species orthology, identity, and suitability index
-│   ├── recommended_antibodies_and_compounds.csv # Pre-validated antibody clones, vendors, and catalog numbers
-│   ├── CellChat_interactions_*.csv             # Validated intercellular ligand–receptor pairs
-│   └── CellChat_interactions_Hippocampus_*.csv # Validated Hippocampus ligand–receptor pairs
-│
-├── figures/                         # Publication figures suites (Option 1 Clean Hierarchy)
-│   ├── Cortex/                      # Prefrontal Cortex figure suite
-│   │   ├── Fig1_Global_Landscape/                  # Fig1a to Fig1e (UMAPs, proportions, markers)
-│   │   ├── Fig2_Cell_Type_Deep_Dives/              # Subfolders (Astrocyte, Microglia, etc.) with panels + DEGs
-│   │   ├── Fig3_Cross_Cell_Convergence/            # Fig3a to Fig3g (Venn, UpSet, KEGG, violins, ranking)
-│   │   ├── Fig4_Intercellular_Communication/       # Fig4a to Fig4e (CellChat networks, circle plots, CSVs)
-│   │   ├── Fig5_Target_Validation/                 # Fig5a to Fig5c (Conservation, druggability, network)
-│   │   └── README.md                               # Complete analytical guide & CTPS mathematical justification
-│   │
-│   ├── Hippocampus/                 # Hippocampus figure suite
-│   │   ├── Fig1_Global_Landscape/                  # Fig1a to Fig1e (UMAPs, proportions, markers)
-│   │   ├── Fig2_Cell_Type_Deep_Dives/              # Subfolders (Astrocyte, Microglia, etc.) with panels + DEGs
-│   │   ├── Fig3_Cross_Cell_Convergence/            # Fig3a to Fig3g (Venn, UpSet, KEGG, violins, ranking)
-│   │   ├── Fig4_Intercellular_Communication/       # Fig4a to Fig4e (CellChat networks, circle plots, CSVs)
-│   │   ├── Fig5_Target_Validation/                 # Fig5a to Fig5c (Conservation, druggability, network)
-│   │   └── README.md                               # Complete analytical guide & CTPS mathematical justification
-│   │
-│   ├── Cross_Region_Comparison/     # Direct head-to-head comparative analysis (Cortex vs HPC)
-│   │   ├── Fig_CrossRegion_01_celltype_proportions_comparison.*
-│   │   ├── Fig_CrossRegion_02_cortex_expression_violins.*
-│   │   ├── Fig_CrossRegion_03_hippocampus_expression_violins.*
-│   │   ├── Fig_CrossRegion_04_deg_concordance_scatter.* (Pearson r per cell type)
-│   │   ├── Fig5a–Fig5c.* (Cross-species homology, surfaceome druggability, mechanistic network)
-│   │   └── README.md
-│   │
-│   └── Quality_Control/            # Reviewer Defense & Empirical Single-Nucleus QC Suite
-│       ├── Fig_QC_01_metrics_violin_by_condition.* (Genes, UMIs, MT%, Ribo% by Condition)
-│       ├── Fig_QC_02_metrics_bivariate_scatter_and_thresholds.* (Library complexity & MT cutoffs)
-│       ├── Fig_QC_03_donor_batch_variability_violins.* (Donor stability across 25 samples)
-│       ├── Fig_QC_04_celltype_quality_metrics.* (QC integrity across 6 NVU lineages)
-│       ├── Fig_QC_05_cell_retention_and_filtering_summary.* (Post-QC yields & SOP thresholds)
-│       └── README.md                               # Complete reviewer rebuttal defense guide
-```
+## Key results
 
----
+**Data.** 319,449 nuclei were loaded and 269,956 passed QC and doublet removal (84.5 %). Of these, 12,931 were in
+heterotypic or ambiguous clusters and were excluded, leaving **257,025 nuclei** in 11 classes
+(`figures/Fig1_Global_Landscape`). Donors: 8 female, 9 male; sex is balanced between groups (Fisher P > 0.6).
 
-## 📊 Publication Figures Catalog
+**Composition.** AD samples contain far fewer vascular nuclei (hippocampus median 24 % vs 62 %, P = 0.021;
+cortex 31 % vs 79 %, P = 0.029). Their parenchymal fraction (oligodendrocytes, astrocytes) is correspondingly
+higher. This most likely reflects how well vessel isolation worked in each sample. It should not be read as
+cell-type loss or gain in AD tissue.
 
-All analytical panels are strictly formatted for direct journal submission:
-- **No chart-internal titles** (preventing redundant or cluttered text headers).
-- **Legible, high-contrast axes, ticks, and labels** formatted at ≥10 pt.
-- **Both vector graphic (`.pdf`) and 300-DPI raster (`.png`) formats**.
-- **Organized symmetrically** across both [`figures/Cortex/`](figures/Cortex) and [`figures/Hippocampus/`](figures/Hippocampus), with multi-region comparisons in [`figures/Cross_Region_Comparison/`](figures/Cross_Region_Comparison).
+**Differential expression (donor-level).**
 
-### Figure 1: Single-Nucleus Landscape of Human Prefrontal Cortex and Hippocampus
-- **Fig1a**: Prefrontal Cortex single-nucleus UMAP projection colored by clinical condition (Control vs AD).
-- **Fig1b**: Prefrontal Cortex UMAP split side-by-side showing resolved cell-type distributions.
-- **Fig1c**: Prefrontal Cortex stacked cell-type proportions with exact percentage labels for all populations.
-- **Fig1d**: Prefrontal Cortex donor-level proportion boxplots showing cell frequency shifts.
-- **Fig1e**: Prefrontal Cortex canonical cell-type marker gene dotplot validating cluster identities.
-- **Fig1f**: Hippocampus single-nucleus UMAP projection colored by clinical condition.
-- **Fig1g**: Hippocampus UMAP split side-by-side by cell type.
-- **Fig1h**: Hippocampus stacked cell-type proportions with exact percentages.
-- **Fig1i**: Hippocampus donor-level proportion boxplots across conditions.
-- **Fig1j**: Hippocampus canonical marker gene dotplot.
+| Region | Microglia | Endothelial | Pericyte | Astrocyte | Oligodendrocyte |
+|---|---|---|---|---|---|
+| Hippocampus (8 v 9), robust DEGs ↑/↓ | 4 / 25 | 29 / 89 | 150 / 210 | 9 / 33 | 15 / 50 |
+| Cortex (4 v 4), robust DEGs ↑/↓ | 1 / 2 | 1 / 19 | 0 / 0 | 3 / 4 | 0 / 0 |
 
-### Figure 2: Neurovascular Unit (NVU) Target Cell Deep Dives (Repeated for 5 Cell Types)
-For each of **Microglia**, **Endothelial Cells**, **Pericytes**, **Astrocytes**, and **Oligodendrocytes**:
-- **Fig2a**: Fine-grained subclustering UMAP projection.
-- **Fig2b**: Subcluster-defining top marker gene expression dotplot.
-- **Fig2c**: Subcluster distribution and cell counts across Control vs AD.
-- **Fig2d**: AD vs Control differential expression volcano plot highlighting top statistically significant DEGs.
-- **Fig2e**: Barplot of the top 10 upregulated and downregulated DEGs ranked by log2 fold-change.
-- **Fig2f**: Top statistically significant KEGG enriched signaling pathways.
-- **Fig2g**: Top statistically significant Gene Ontology Biological Process (GO:BP) terms.
-- **Fig2h**: STRING-derived Protein–Protein Interaction (PPI) network with Louvain community detection.
+In cortex, vascular yield almost perfectly separates AD from control samples. Adjusting for it therefore
+removes most of the power. Without the adjustment, 31–455 genes per cell type are called, but these cannot be
+distinguished from composition and ambient effects (`tables/pseudobulk_DE_sensitivity_no_yield.csv`).
 
-### Figure 3: Cross-Cell Molecular Convergence & Multi-Factorial Drug Target Prioritization
-- **Fig3a**: UpSet plot (`Fig3a_upset_5celltypes`) and Venn diagram (`Fig3a_venn_5celltypes`) showing DEG overlap across all 5 NVU lineages.
-- **Fig3b**: KEGG pathway enrichment for the shared convergent molecular targets.
-- **Fig3c**: Gene Ontology Biological Process terms enriched in convergent genes.
-- **Fig3d**: High-confidence PPI interaction network among convergent targets.
-- **Fig3e**: Split violin plots of candidate target expression in Prefrontal Cortex (Control vs AD across 5 cell types).
-- **Fig3f**: Split violin plots of candidate target expression in Hippocampus (validating dual-region conservation).
-- **Fig3g**: Prioritization ranking barplot based on the quantitative Multi-Factorial Consensus Score ($S_{\text{consensus}}$).
+**Convergent program.** 47 genes are robust in ≥ 2 hippocampal NVU cell types, and almost all of them are
+*lower* in AD. They form a hypoxia/HIF-1 and stress-response module: *ADAMTS9* (4 cell types), *VEGFA, ELL2,
+BCL6, YBX3, HIF1A* (3 each), *HILPDA, SLC2A3, PDK1, BNIP3L, PDE10A*. Pre-ranked GSEA gives Hallmark *Hypoxia*
+NES −2.1 to −2.7 in all five hippocampal cell types (FDR < 0.002), together with *TNF-α/NF-κB* and
+*Inflammatory response*. The cortex of the same donors agrees in direction for 77–87 % of hippocampal robust
+DEGs (binomial P from 8.8 × 10⁻³⁷ for pericytes to 5.5 × 10⁻⁴ for microglia; `tables/cross_region_concordance.csv`), although few cortical genes reach significance on their own. In pericytes, an
+*ADAMTS9/ELL2/PCBP3*-high sub-state makes up a median 41 % of hippocampal pericytes in controls and 3 % in AD
+(FDR = 0.044).
 
-### Figure 4: Comparative Intercellular Signaling & NVU Communication Rewiring
-- **Fig4a**: Total intercellular interaction number (Control: 113, AD: 98) and interaction strength (Control: 7.072, AD: 8.183).
-- **Fig4b**: Differential circular interaction network displaying net signaling shifts (red edges = increased in AD, blue edges = decreased in AD).
-- **Fig4c**: Relative information flow ranking across 27 signaling pathways identifying AD-enriched vs Control-enriched cascades.
-- **Fig4d**: Side-by-side circular network of **APP** signaling showing profound hyper-activation targeting Microglia in AD.
-- **Fig4e**: Ligand–receptor bubble plot highlighting communication probability and significance of critical NVU interactions (APP–SORL1, CD46–JAG1, CNTN1–NOTCH2, NRG3–ERBB4).
+**Donor covariates (Fig. S2).** Yang *et al.* Supplementary Table 1 maps onto all 17 donors (sex agrees
+17/17; the cortex subset agrees 17/17).
+- *Balance.* AD and control donors are balanced for age (84 vs 78 y, P = 0.15), post-mortem interval
+  (5.8 vs 5.0 h, P = 0.77), APOE ε4 dose and recorded acute hypoxic neuropathology (one donor per group).
+- *Association with the score.* The hypoxia-module score is not associated with age, PMI or APOE ε4 in any
+  cell type (|ρ| ≤ 0.23).
+- *The AD effect persists.* In pericytes it is −1.48 module-score units (P = 0.0007) after adjusting for age and PMI, and
+  −1.45 (P = 0.004) after excluding the hypoxic-pathology donors. It stays significant in all five cell
+  types under every model.
+- *Gene-level DE.* Re-fitting with age and PMI keeps 43–86 % of robust DEGs at FDR < 0.05, with no sign
+  changes.
 
-### Figure 5: In Silico Target Validation, Cross-Species Conservation & Antibody Selection
-- **Fig5a**: Human-to-Mouse sequence identity (%) and In-Vivo Suitability Index (0–100) across prioritized therapeutic targets.
-- **Fig5b**: Subcellular surfaceome classification and extracellular epitope accessibility for antibody targeting.
-- **Fig5c**: Mechanistic network linking prioritized candidates (*SORL1, CLEC5A, ADAMTS9, PCDH9, DUSP1, NOTCH2*) directly to canonical AD drivers (*APP, BACE1, TYROBP, TREM2, CLDN5, MAPK14*).
+> **Interpretation caveat.** Hypoxia-inducible transcripts in post-mortem brain also depend on agonal state
+> and tissue pH. Supplementary Table 1 does not report agonal score, brain pH or RIN. Recorded acute hypoxic
+> neuropathology (2 donors) is only a coarse proxy. A terminal-hypoxia contribution is therefore **reduced
+> but not excluded**. The remaining steps are obtaining those variables from the tissue source (the
+> Stanford/VA/NIA Aging Clinical Research Center) and replicating in an independent cohort.
 
----
+**Claims from the legacy analysis that are not supported:**
+- ARL17B and the lncRNA "targets" follow donor 17q21.31 genotype.
+- No convergent immediate-early-gene program (FOS/JUN/EGR1/DUSP1/GADD45B) is significant in more than one
+  cell type (Fig. 3f).
+- APP→SORL1 signalling into microglia does not differ (FDR 0.81 in hippocampus, 1.0 in cortex; Fig. 4d).
+- No ligand–receptor interaction changes at donor-level FDR < 0.05 (Fig. 4).
 
-## 🧬 Key Biological Findings
+**Candidates.** The ranking uses, in order, the number of hippocampal cell types where the gene is robust,
+cortex support, and evidence (`tables/target_prioritization.csv`). The top hits are *ADAMTS9* (secreted;
+human–mouse identity 89 %), *ELL2, VEGFA, BCL6, YBX3, HIF1A*. STRING links *HIF1A–STAT3–BCL6–SLC2A3* and
+*COL4A2–LAMB1*; none of the top 20 connects directly to AD GWAS genes at score ≥ 0.7. VEGFA cannot be resolved
+by symbol in STRING v12, and this is stated in Fig. 5d.
 
-1. **Neurovascular Unit Disruption**:
-   - Endothelial cells and pericytes exhibit pronounced downregulation of basement membrane and structural extracellular matrix pathways (*Laminin*, *Collagen* signaling pathways show severe depletion in AD).
-   - Pericytes undergo loss of contractile and barrier-supportive transcripts, matching documented blood–brain barrier breakdown in AD.
+## Figures
 
-2. **Cross-Cell Lineage Convergence**:
-   - Immediate early stress response and transcriptional regulator genes (**FOS**, **JUN**, **DUSP1**, **EGR1**) and damage-response mediators (**GADD45B**) converge across all five NVU cell types, indicating a universal cellular stress program.
-   - Dual-region validation in both Prefrontal Cortex and Hippocampus confirms that this convergent stress signature is preserved across anatomically distinct, vulnerable brain regions.
+All figures are vector PDF plus 300-dpi PNG, use CVD-safe colours, and have sentence-style panel titles. Every
+summary is shown with per-donor points.
 
-3. **Intercellular Signaling Rewiring in Alzheimer's Disease**:
-   - While total interaction numbers decline slightly in AD (113 in Control vs 98 in AD), total interaction strength increases markedly (7.072 to 8.183), driven by concentrated hyper-signaling into microglia.
-   - **APP–SORL1 Signaling**: Amyloid Precursor Protein (*APP*) ligand–receptor signaling from astrocytes and oligodendrocytes onto microglial and neuronal receptors is heavily augmented in AD.
-   - **Neuroimmune & Inflammatory Checkpoints**: Increased information flow is concentrated in *CD46*, *PTPR*, *TGFb*, *PSAP*, *RA*, *NRXN*, *APP*, and *NOTCH* cascades, establishing clear mechanistic targets for therapeutic intervention.
+- `figures/Fig1_Global_Landscape/Fig1_global_landscape`: integrated UMAP of all 257,025 nuclei from both regions
+  (cell type, region, condition), canonical-marker dot plot, per-sample composition, vascular yield.
+- `figures/Fig2_Cell_Type_Deep_Dives/Fig2a_Microglia` … `Fig2e_Oligodendrocyte`: one deep-dive figure per NVU
+  cell type, in a fixed four-row order. Each row reads left to right: (a, b) subcluster, region and
+  condition UMAPs; (c, d) markers and per-sample proportions; (e, f) hippocampus and cortex volcano plots;
+  (g, h) per-sample heatmap of robust DEGs and GSEA.
+- `figures/Fig3_Cross_Cell_Convergence/Fig3_convergence`
+- `figures/Fig4_Intercellular_Communication/Fig4_communication`
+- `figures/Fig5_Target_Prioritization/Fig5_targets`
+- `figures/Quality_Control/FigS1_quality_control`
+- `figures/Quality_Control/FigS2_donor_covariates`
 
----
+See [`figures/README.md`](figures/README.md) for panel-by-panel legends.
 
-## 🚀 How to Run the Pipeline
+**Single panels.** `single_figures/` holds every lettered panel as a separate PNG (300 dpi) and PDF. Panel
+letters and panel titles are removed; axes, legends, colour bars and facet labels are kept. They are written
+automatically by `save_fig()` in `scripts/config.py` whenever a figure script runs. File names:
+- `Fig1a` … `Fig1f` for Fig. 1, and likewise for Fig. 3, Fig. 4, Fig. 5, Fig. S1 and Fig. S2.
+- `Fig2<cell type letter>_<panel>` for Fig. 2. For example, `Fig2c_e` is pericyte panel e, the hippocampal
+  volcano plot.
 
-### Prerequisites
-- R (version ≥ 4.3.0) with packages: `Seurat` (v5), `CellChat` (v2.2), `igraph`, `clusterProfiler`, `org.Hs.eg.db`, `ggplot2`, `patchwork`, `VennDiagram`, `ggalluvial`, `readr`, `dplyr`.
+## Limitations
 
-### Execution Order
-From the root directory of the project, execute the numbered scripts in sequence:
+1. Only filtered matrices are on GEO. SoupX/CellBender need raw droplets, so ambient RNA is handled through the
+   yield covariate and the contamination flags, not by count correction.
+2. Age, PMI, APOE, Braak/CERAD and neuropathology notes come from Yang *et al.* Supplementary Table 1 and
+   are tested in `10_donor_covariates.py`. Agonal-factor score, brain pH and RIN are not reported anywhere and
+   remain unmodelled. Braak stage is missing for 4 of 9 AD donors.
+3. Cortex (4 v 4) is underpowered, and yield is nearly confounded with condition there. The cortex comes from
+   the same donors as the hippocampus, so it cannot serve as independent replication.
+4. VINE-seq enriches vessels. Parenchymal populations (neurons, OPCs) are small and are not analysed for DE.
+5. Mouse orthologues are matched by gene symbol in reviewed UniProtKB. Primate-specific genes (e.g. *ADGRE2*)
+   have no orthologue and are shown as n/a.
 
-```powershell
-# Step 1: Discover files and parse sample metadata
-Rscript scripts/01_data_exploration_and_metadata.R
-
-# Step 2: Quality control, filtering, and reviewer defense figures
-Rscript scripts/02a_process_cortex.R
-Rscript scripts/02b_process_hippocampus.R
-Rscript scripts/02c_qc_and_filtering_figures.R
-
-# Step 3: Harmony batch integration, clustering, and cell typing
-Rscript scripts/03a_integrate_cortex.R
-Rscript scripts/03b_integrate_hippocampus.R
-
-# Step 4: NVU target cell subclustering, DEGs, KEGG/GO, and PPI networks
-Rscript scripts/04a_cortex_subclustering_and_degs.R
-Rscript scripts/04b_hippocampus_subclustering_and_degs.R
-
-# Step 5: Cross-cell convergence, dual-region validation, and CTPS target prioritization
-Rscript scripts/05a_cortex_cross_cell_convergence.R
-Rscript scripts/05b_hippocampus_cross_cell_convergence.R
-
-# Step 6: CellChat v2.2 cell–cell communication modeling
-Rscript scripts/06a_cortex_cell_cell_communication.R
-Rscript scripts/06b_hippocampus_cell_cell_communication.R
-
-# Step 7: In silico target validation and antibody selection guide
-Rscript scripts/07a_cortex_target_validation.R
-Rscript scripts/07b_hippocampus_target_validation.R
-
-# Step 8: Head-to-head cross-region comparative analysis
-Rscript scripts/08_cross_region_comparison.R
-```
-
----
-
-## 📄 License & Attribution
-The raw data originates from GEO accession [GSE163577](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE163577). All code and analytical figures in this repository were developed for the research study *"Single-Cell Transcriptomic Identification of Alzheimer’s Disease-Associated Molecular Targets and CNS–Peripheral Immune Signatures for Experimental Validation and Therapeutic Intervention"*.
+## License and attribution
+Raw data: GEO GSE163577 (Yang, Vest, …, Wyss-Coray; *Nature* 2022). Code: see `LICENSE`.

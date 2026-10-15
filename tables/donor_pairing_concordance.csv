@@ -1,0 +1,9 @@
+donor,sex_concordant,genotype_concordant
+01_10,True,True
+03_03,True,True
+03_09,True,True
+04_09,True,False
+04_11,True,True
+04_13,True,True
+04_15,True,True
+05_10,True,True

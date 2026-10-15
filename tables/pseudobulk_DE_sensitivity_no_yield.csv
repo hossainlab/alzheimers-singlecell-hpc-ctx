@@ -1,0 +1,11 @@
+region,cell_type,padj05_with_yield,padj05_without_yield,lfc_correlation
+Hippocampus,Microglia,30,22,0.811
+Hippocampus,Endothelial,124,61,0.816
+Hippocampus,Pericyte,381,235,0.891
+Hippocampus,Astrocyte,46,68,0.813
+Hippocampus,Oligodendrocyte,70,59,0.814
+Cortex,Microglia,3,31,0.426
+Cortex,Endothelial,22,279,0.582
+Cortex,Pericyte,0,118,0.488
+Cortex,Astrocyte,7,195,0.483
+Cortex,Oligodendrocyte,0,455,0.528

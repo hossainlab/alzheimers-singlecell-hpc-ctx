@@ -1,0 +1,7 @@
+covariate,AD_median,Control_median,MWU_p
+age,84.0,78.0,0.14841638233976623
+pmi_h,5.833333333333333,5.0,0.7720133706972947
+apoe4_dose,1.0,1.0,1.0
+brain_weight_g,1130.0,1195.0,0.17739974034643524
+acute_hypoxic_pathology,1.0,1.0,1.0
+infarct_noted,3.0,1.0,0.5764705882352941
