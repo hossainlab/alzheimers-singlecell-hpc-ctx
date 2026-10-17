@@ -4,6 +4,7 @@
 |---|---|
 | [`01_figure_interpretations.md`](01_figure_interpretations.md) | For each figure (S1, 1, 2a–e, 3, 4, 5): what it shows, why the analysis was chosen, and what can be concluded |
 | [`02_wet_lab_validation_plan.md`](02_wet_lab_validation_plan.md) | Staged, gated plan: metadata and replication → in-situ human validation → in vitro mechanism → functional tests → mouse |
+| [`03_methods.md`](03_methods.md) | Methods for every pipeline step (01–10): parameters, models, statistics, software versions |
 | [`../figures/README.md`](../figures/README.md) | Panel-by-panel figure legends |
 | [`../legacy/README.md`](../legacy/README.md) | Defects of the superseded R pipeline and how each was fixed |
 
